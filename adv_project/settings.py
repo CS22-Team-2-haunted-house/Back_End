@@ -165,3 +165,6 @@ django_heroku.settings(locals())
 # For local use
 # del DATABASES['default']['OPTIONS']['sslmode']
 
+django_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
+
