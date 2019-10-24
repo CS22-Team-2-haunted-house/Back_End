@@ -16,7 +16,7 @@ class Room(models.Model):
     def save_room(self):
         self.save
 
-    def connectRooms(self, destinationRoom, direction):
+    def connect_rooms(self, destinationRoom, direction):
         destinationRoomID = destinationRoom.id
         try:
             destinationRoom = Room.objects.get(id=destinationRoomID)
