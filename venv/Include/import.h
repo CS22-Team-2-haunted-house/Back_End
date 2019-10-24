@@ -8,8 +8,11 @@ extern "C" {
 #endif
 
 #ifndef Py_LIMITED_API
+<<<<<<< HEAD
 PyAPI_FUNC(_PyInitError) _PyImportZip_Init(void);
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyMODINIT_FUNC PyInit__imp(void);
 #endif /* !Py_LIMITED_API */
 PyAPI_FUNC(long) PyImport_GetMagicNumber(void);

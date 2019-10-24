@@ -41,8 +41,13 @@ __author__ = ("Guido van Rossum <guido@python.org>, "
               "Amaury Forgeot d'Arc <amauryfa@gmail.com>, "
               "Benjamin Peterson <benjamin@python.org>")
 
+<<<<<<< HEAD
 __all__ = ["BlockingIOError", "open", "IOBase", "RawIOBase", "FileIO",
            "BytesIO", "StringIO", "BufferedIOBase",
+=======
+__all__ = ["BlockingIOError", "open", "open_code", "IOBase", "RawIOBase",
+           "FileIO", "BytesIO", "StringIO", "BufferedIOBase",
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
            "BufferedReader", "BufferedWriter", "BufferedRWPair",
            "BufferedRandom", "TextIOBase", "TextIOWrapper",
            "UnsupportedOperation", "SEEK_SET", "SEEK_CUR", "SEEK_END"]
@@ -52,7 +57,11 @@ import _io
 import abc
 
 from _io import (DEFAULT_BUFFER_SIZE, BlockingIOError, UnsupportedOperation,
+<<<<<<< HEAD
                  open, FileIO, BytesIO, StringIO, BufferedReader,
+=======
+                 open, open_code, FileIO, BytesIO, StringIO, BufferedReader,
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                  BufferedWriter, BufferedRWPair, BufferedRandom,
                  IncrementalNewlineDecoder, TextIOWrapper)
 

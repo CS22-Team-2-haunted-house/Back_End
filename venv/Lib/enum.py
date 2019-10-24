@@ -1,12 +1,15 @@
 import sys
 from types import MappingProxyType, DynamicClassAttribute
 
+<<<<<<< HEAD
 # try _collections first to reduce startup cost
 try:
     from _collections import OrderedDict
 except ImportError:
     from collections import OrderedDict
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 __all__ = [
         'EnumMeta',
@@ -169,7 +172,11 @@ class EnumMeta(type):
         # create our new Enum type
         enum_class = super().__new__(metacls, cls, bases, classdict)
         enum_class._member_names_ = []               # names in definition order
+<<<<<<< HEAD
         enum_class._member_map_ = OrderedDict()      # name->value map
+=======
+        enum_class._member_map_ = {}                 # name->value map
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         enum_class._member_type_ = member_type
 
         # save DynamicClassAttribute attributes from super classes so we know
@@ -313,11 +320,17 @@ class EnumMeta(type):
 
     def __contains__(cls, member):
         if not isinstance(member, Enum):
+<<<<<<< HEAD
             import warnings
             warnings.warn(
                     "using non-Enums in containment checks will raise "
                     "TypeError in Python 3.8",
                     DeprecationWarning, 2)
+=======
+            raise TypeError(
+                "unsupported operand type(s) for 'in': '%s' and '%s'" % (
+                    type(member).__qualname__, cls.__class__.__qualname__))
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return isinstance(member, cls) and member._name_ in cls._member_map_
 
     def __delattr__(cls, attr):
@@ -439,6 +452,48 @@ class EnumMeta(type):
 
         return enum_class
 
+<<<<<<< HEAD
+=======
+    def _convert_(cls, name, module, filter, source=None):
+        """
+        Create a new Enum subclass that replaces a collection of global constants
+        """
+        # convert all constants from source (or module) that pass filter() to
+        # a new Enum called name, and export the enum and its members back to
+        # module;
+        # also, replace the __reduce_ex__ method so unpickling works in
+        # previous Python versions
+        module_globals = vars(sys.modules[module])
+        if source:
+            source = vars(source)
+        else:
+            source = module_globals
+        # _value2member_map_ is populated in the same order every time
+        # for a consistent reverse mapping of number to name when there
+        # are multiple names for the same number.
+        members = [
+                (name, value)
+                for name, value in source.items()
+                if filter(name)]
+        try:
+            # sort by value
+            members.sort(key=lambda t: (t[1], t[0]))
+        except TypeError:
+            # unless some values aren't comparable, in which case sort by name
+            members.sort(key=lambda t: t[0])
+        cls = cls(name, members, module=module)
+        cls.__reduce_ex__ = _reduce_ex_by_name
+        module_globals.update(cls.__members__)
+        module_globals[name] = cls
+        return cls
+
+    def _convert(cls, *args, **kwargs):
+        import warnings
+        warnings.warn("_convert is deprecated and will be removed in 3.9, use "
+                      "_convert_ instead.", DeprecationWarning, stacklevel=2)
+        return cls._convert_(*args, **kwargs)
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     @staticmethod
     def _get_mixins_(bases):
         """Returns the type for creating enum members, and the first inherited
@@ -630,6 +685,7 @@ class Enum(metaclass=EnumMeta):
         """The value of the Enum member."""
         return self._value_
 
+<<<<<<< HEAD
     @classmethod
     def _convert(cls, name, module, filter, source=None):
         """
@@ -666,6 +722,8 @@ class Enum(metaclass=EnumMeta):
         module_globals[name] = cls
         return cls
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 class IntEnum(int, Enum):
     """Enum where members are also (and must be) ints"""
@@ -682,7 +740,11 @@ class Flag(Enum):
         Generate the next value when not given.
 
         name: the name of the member
+<<<<<<< HEAD
         start: the initital start value or None
+=======
+        start: the initial start value or None
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         count: the number of existing members
         last_value: the last value assigned or None
         """
@@ -728,12 +790,18 @@ class Flag(Enum):
 
     def __contains__(self, other):
         if not isinstance(other, self.__class__):
+<<<<<<< HEAD
             import warnings
             warnings.warn(
                     "using non-Flags in containment checks will raise "
                     "TypeError in Python 3.8",
                     DeprecationWarning, 2)
             return False
+=======
+            raise TypeError(
+                "unsupported operand type(s) for 'in': '%s' and '%s'" % (
+                    type(other).__qualname__, self.__class__.__qualname__))
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return other._value_ & self._value_ == other._value_
 
     def __repr__(self):

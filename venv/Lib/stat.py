@@ -40,6 +40,13 @@ S_IFREG  = 0o100000  # regular file
 S_IFIFO  = 0o010000  # fifo (named pipe)
 S_IFLNK  = 0o120000  # symbolic link
 S_IFSOCK = 0o140000  # socket file
+<<<<<<< HEAD
+=======
+# Fallbacks for uncommon platform-specific constants
+S_IFDOOR = 0
+S_IFPORT = 0
+S_IFWHT = 0
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 # Functions to test for each file type
 
@@ -71,6 +78,21 @@ def S_ISSOCK(mode):
     """Return True if mode is from a socket."""
     return S_IFMT(mode) == S_IFSOCK
 
+<<<<<<< HEAD
+=======
+def S_ISDOOR(mode):
+    """Return True if mode is from a door."""
+    return False
+
+def S_ISPORT(mode):
+    """Return True if mode is from an event port."""
+    return False
+
+def S_ISWHT(mode):
+    """Return True if mode is from a whiteout."""
+    return False
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 # Names for permission bits
 
 S_ISUID = 0o4000  # set UID bit
@@ -111,6 +133,10 @@ SF_SNAPSHOT  = 0x00200000  # file is a snapshot file
 
 _filemode_table = (
     ((S_IFLNK,         "l"),
+<<<<<<< HEAD
+=======
+     (S_IFSOCK,        "s"),  # Must appear before IFREG and IFDIR as IFSOCK == IFREG | IFDIR
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
      (S_IFREG,         "-"),
      (S_IFBLK,         "b"),
      (S_IFDIR,         "d"),

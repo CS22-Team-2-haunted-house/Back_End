@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Tuple object interface */
 
 #ifndef Py_TUPLEOBJECT_H
@@ -21,6 +24,7 @@ inserted in the tuple.  Similarly, PyTuple_GetItem does not increment the
 returned item's reference count.
 */
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 typedef struct {
     PyObject_VAR_HEAD
@@ -33,6 +37,8 @@ typedef struct {
 } PyTupleObject;
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_DATA(PyTypeObject) PyTuple_Type;
 PyAPI_DATA(PyTypeObject) PyTupleIter_Type;
 
@@ -45,6 +51,7 @@ PyAPI_FUNC(Py_ssize_t) PyTuple_Size(PyObject *);
 PyAPI_FUNC(PyObject *) PyTuple_GetItem(PyObject *, Py_ssize_t);
 PyAPI_FUNC(int) PyTuple_SetItem(PyObject *, Py_ssize_t, PyObject *);
 PyAPI_FUNC(PyObject *) PyTuple_GetSlice(PyObject *, Py_ssize_t, Py_ssize_t);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) _PyTuple_Resize(PyObject **, Py_ssize_t);
 #endif
@@ -66,6 +73,17 @@ PyAPI_FUNC(int) PyTuple_ClearFreeList(void);
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _PyTuple_DebugMallocStats(FILE *out);
 #endif /* Py_LIMITED_API */
+=======
+PyAPI_FUNC(PyObject *) PyTuple_Pack(Py_ssize_t, ...);
+
+PyAPI_FUNC(int) PyTuple_ClearFreeList(void);
+
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_TUPLEOBJECT_H
+#  include  "cpython/tupleobject.h"
+#  undef Py_CPYTHON_TUPLEOBJECT_H
+#endif
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifdef __cplusplus
 }

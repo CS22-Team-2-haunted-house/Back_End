@@ -17,4 +17,7 @@ if not defined _OLD_VIRTUAL_PATH goto ENDIFVPATH
     set "PATH=%_OLD_VIRTUAL_PATH%"
     set _OLD_VIRTUAL_PATH=
 :ENDIFVPATH
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78

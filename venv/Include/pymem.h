@@ -11,6 +11,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void *) PyMem_RawMalloc(size_t size);
 PyAPI_FUNC(void *) PyMem_RawCalloc(size_t nelem, size_t elsize);
@@ -58,6 +59,8 @@ PyAPI_FUNC(PyObject*) _PyTraceMalloc_GetTraceback(
 #endif   /* !defined(Py_LIMITED_API) */
 
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* BEWARE:
 
    Each interface exports both functions and macros.  Extension modules should
@@ -97,6 +100,7 @@ PyAPI_FUNC(PyObject*) _PyTraceMalloc_GetTraceback(
 */
 
 PyAPI_FUNC(void *) PyMem_Malloc(size_t size);
+<<<<<<< HEAD
 #if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03050000
 PyAPI_FUNC(void *) PyMem_Calloc(size_t nelem, size_t elsize);
 #endif
@@ -114,6 +118,11 @@ PyAPI_FUNC(char *) _PyMem_Strdup(const char *str);
 PyAPI_FUNC(wchar_t*) _PyMem_RawWcsdup(const wchar_t *str);
 #endif
 
+=======
+PyAPI_FUNC(void *) PyMem_Realloc(void *ptr, size_t new_size);
+PyAPI_FUNC(void) PyMem_Free(void *ptr);
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Macros. */
 
 /* PyMem_MALLOC(0) means malloc(1). Some systems would return NULL
@@ -162,6 +171,7 @@ PyAPI_FUNC(wchar_t*) _PyMem_RawWcsdup(const wchar_t *str);
 #define PyMem_Del               PyMem_Free
 #define PyMem_DEL               PyMem_FREE
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 typedef enum {
     /* PyMem_RawMalloc(), PyMem_RawRealloc() and PyMem_RawFree() */
@@ -235,6 +245,48 @@ PyAPI_FUNC(void) PyMem_SetupDebugHooks(void);
 PyAPI_FUNC(int) _PyMem_SetDefaultAllocator(
     PyMemAllocatorDomain domain,
     PyMemAllocatorEx *old_alloc);
+=======
+/* bpo-35053: expose _Py_tracemalloc_config for performance:
+   _Py_NewReference() needs an efficient check to test if tracemalloc is
+   tracing.
+
+   It has to be defined in pymem.h, before object.h is included. */
+struct _PyTraceMalloc_Config {
+    /* Module initialized?
+       Variable protected by the GIL */
+    enum {
+        TRACEMALLOC_NOT_INITIALIZED,
+        TRACEMALLOC_INITIALIZED,
+        TRACEMALLOC_FINALIZED
+    } initialized;
+
+    /* Is tracemalloc tracing memory allocations?
+       Variable protected by the GIL */
+    int tracing;
+
+    /* limit of the number of frames in a traceback, 1 by default.
+       Variable protected by the GIL. */
+    int max_nframe;
+
+    /* use domain in trace key?
+       Variable protected by the GIL. */
+    int use_domain;
+};
+
+PyAPI_DATA(struct _PyTraceMalloc_Config) _Py_tracemalloc_config;
+
+#define _PyTraceMalloc_Config_INIT \
+    {.initialized = TRACEMALLOC_NOT_INITIALIZED, \
+     .tracing = 0, \
+     .max_nframe = 1, \
+     .use_domain = 0}
+
+
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_PYMEM_H
+#  include  "cpython/pymem.h"
+#  undef Py_CPYTHON_PYMEM_H
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifdef __cplusplus

@@ -14,6 +14,13 @@ extern "C" {
 #define DELIM L';'
 #endif
 
+<<<<<<< HEAD
+=======
+#ifdef __VXWORKS__
+#define DELIM L';'
+#endif
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Filename separator */
 #ifndef SEP
 #define SEP L'/'

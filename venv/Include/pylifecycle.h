@@ -7,6 +7,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 typedef struct {
     const char *prefix;
@@ -91,13 +92,18 @@ PyAPI_FUNC(_PyInitError) _Py_InitializeMainInterpreter(
         const _PyMainInterpreterConfig *config);
 #endif   /* !defined(Py_LIMITED_API) */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Initialization and finalization */
 PyAPI_FUNC(void) Py_Initialize(void);
 PyAPI_FUNC(void) Py_InitializeEx(int);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _Py_FatalInitError(_PyInitError err) _Py_NO_RETURN;
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(void) Py_Finalize(void);
 #if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03060000
 PyAPI_FUNC(int) Py_FinalizeEx(void);
@@ -112,6 +118,7 @@ PyAPI_FUNC(void) Py_EndInterpreter(PyThreadState *);
 /* Py_PyAtExit is for the atexit module, Py_AtExit is for low-level
  * exit functions.
  */
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _Py_PyAtExit(void (*func)(PyObject *), PyObject *);
 #endif
@@ -148,6 +155,29 @@ PyAPI_FUNC(int) _Py_FindEnvConfigValue(
     wchar_t *value,
     size_t value_size);
 #endif
+=======
+PyAPI_FUNC(int) Py_AtExit(void (*func)(void));
+
+PyAPI_FUNC(void) _Py_NO_RETURN Py_Exit(int);
+
+/* Bootstrap __main__ (defined in Modules/main.c) */
+PyAPI_FUNC(int) Py_Main(int argc, wchar_t **argv);
+
+PyAPI_FUNC(int) Py_BytesMain(int argc, char **argv);
+
+/* In pathconfig.c */
+PyAPI_FUNC(void) Py_SetProgramName(const wchar_t *);
+PyAPI_FUNC(wchar_t *) Py_GetProgramName(void);
+
+PyAPI_FUNC(void) Py_SetPythonHome(const wchar_t *);
+PyAPI_FUNC(wchar_t *) Py_GetPythonHome(void);
+
+PyAPI_FUNC(wchar_t *) Py_GetProgramFullPath(void);
+
+PyAPI_FUNC(wchar_t *) Py_GetPrefix(void);
+PyAPI_FUNC(wchar_t *) Py_GetExecPrefix(void);
+PyAPI_FUNC(wchar_t *) Py_GetPath(void);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(void)      Py_SetPath(const wchar_t *);
 #ifdef MS_WINDOWS
 int _Py_CheckPython3(void);
@@ -159,6 +189,7 @@ PyAPI_FUNC(const char *) Py_GetPlatform(void);
 PyAPI_FUNC(const char *) Py_GetCopyright(void);
 PyAPI_FUNC(const char *) Py_GetCompiler(void);
 PyAPI_FUNC(const char *) Py_GetBuildInfo(void);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(const char *) _Py_gitidentifier(void);
 PyAPI_FUNC(const char *) _Py_gitversion(void);
@@ -213,6 +244,8 @@ PyAPI_FUNC(void) PyAsyncGen_Fini(void);
 
 PyAPI_FUNC(int) _Py_IsFinalizing(void);
 #endif   /* !Py_LIMITED_API */
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Signals */
 typedef void (*PyOS_sighandler_t)(int);
@@ -220,6 +253,7 @@ PyAPI_FUNC(PyOS_sighandler_t) PyOS_getsig(int);
 PyAPI_FUNC(PyOS_sighandler_t) PyOS_setsig(int, PyOS_sighandler_t);
 
 #ifndef Py_LIMITED_API
+<<<<<<< HEAD
 /* Random */
 PyAPI_FUNC(int) _PyOS_URandom(void *buffer, Py_ssize_t size);
 PyAPI_FUNC(int) _PyOS_URandomNonblock(void *buffer, Py_ssize_t size);
@@ -230,6 +264,11 @@ PyAPI_FUNC(int) _PyOS_URandomNonblock(void *buffer, Py_ssize_t size);
 PyAPI_FUNC(void) _Py_CoerceLegacyLocale(const _PyCoreConfig *config);
 PyAPI_FUNC(int) _Py_LegacyLocaleDetected(void);
 PyAPI_FUNC(char *) _Py_SetLocaleFromEnv(int category);
+=======
+#  define Py_CPYTHON_PYLIFECYCLE_H
+#  include  "cpython/pylifecycle.h"
+#  undef Py_CPYTHON_PYLIFECYCLE_H
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifdef __cplusplus

@@ -22,11 +22,24 @@ PyAPI_FUNC(PyCodeObject *) PyNode_Compile(struct _node *, const char *);
 #define PyCF_DONT_IMPLY_DEDENT 0x0200
 #define PyCF_ONLY_AST 0x0400
 #define PyCF_IGNORE_COOKIE 0x0800
+<<<<<<< HEAD
+=======
+#define PyCF_TYPE_COMMENTS 0x1000
+#define PyCF_ALLOW_TOP_LEVEL_AWAIT 0x2000
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifndef Py_LIMITED_API
 typedef struct {
     int cf_flags;  /* bitmask of CO_xxx flags relevant to future */
+<<<<<<< HEAD
 } PyCompilerFlags;
+=======
+    int cf_feature_version;  /* minor Python version (PyCF_ONLY_AST) */
+} PyCompilerFlags;
+
+#define _PyCompilerFlags_INIT \
+    (PyCompilerFlags){.cf_flags = 0, .cf_feature_version = PY_MINOR_VERSION}
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 /* Future feature support */
@@ -75,6 +88,10 @@ PyAPI_FUNC(PyObject*) _Py_Mangle(PyObject *p, PyObject *name);
 
 #define PY_INVALID_STACK_EFFECT INT_MAX
 PyAPI_FUNC(int) PyCompile_OpcodeStackEffect(int opcode, int oparg);
+<<<<<<< HEAD
+=======
+PyAPI_FUNC(int) PyCompile_OpcodeStackEffectWithJump(int opcode, int oparg, int jump);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(int) _PyAST_Optimize(struct _mod *, PyArena *arena, int optimize);
 
@@ -84,10 +101,18 @@ PyAPI_FUNC(int) _PyAST_Optimize(struct _mod *, PyArena *arena, int optimize);
 
 #endif /* !Py_LIMITED_API */
 
+<<<<<<< HEAD
 /* These definitions must match corresponding definitions in graminit.h.
    There's code in compile.c that checks that they are the same. */
 #define Py_single_input 256
 #define Py_file_input 257
 #define Py_eval_input 258
+=======
+/* These definitions must match corresponding definitions in graminit.h. */
+#define Py_single_input 256
+#define Py_file_input 257
+#define Py_eval_input 258
+#define Py_func_type_input 345
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #endif /* !Py_COMPILE_H */

@@ -32,7 +32,11 @@
 #include <errno.h>
 #endif
 #include <stdlib.h>
+<<<<<<< HEAD
 #ifdef HAVE_UNISTD_H
+=======
+#ifndef MS_WINDOWS
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #include <unistd.h>
 #endif
 #ifdef HAVE_CRYPT_H
@@ -72,8 +76,11 @@
 #  endif
 #endif
 
+<<<<<<< HEAD
 #include "pyatomic.h"
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Debug-mode build with pymalloc implies PYMALLOC_DEBUG.
  *  PYMALLOC_DEBUG is in error if pymalloc is not in use.
  */
@@ -126,10 +133,18 @@
 #include "weakrefobject.h"
 #include "structseq.h"
 #include "namespaceobject.h"
+<<<<<<< HEAD
+=======
+#include "picklebufobject.h"
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #include "codecs.h"
 #include "pyerrors.h"
 
+<<<<<<< HEAD
+=======
+#include "cpython/initconfig.h"
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #include "pystate.h"
 #include "context.h"
 
@@ -155,5 +170,9 @@
 #include "dtoa.h"
 #include "fileutils.h"
 #include "pyfpe.h"
+<<<<<<< HEAD
+=======
+#include "tracemalloc.h"
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #endif /* !Py_PYTHON_H */

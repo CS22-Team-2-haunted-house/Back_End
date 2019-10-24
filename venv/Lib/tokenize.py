@@ -28,16 +28,24 @@ from builtins import open as _builtin_open
 from codecs import lookup, BOM_UTF8
 import collections
 from io import TextIOWrapper
+<<<<<<< HEAD
 from itertools import chain
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 import itertools as _itertools
 import re
 import sys
 from token import *
+<<<<<<< HEAD
+=======
+from token import EXACT_TOKEN_TYPES
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 cookie_re = re.compile(r'^[ \t\f]*#.*?coding[:=][ \t]*([-\w.]+)', re.ASCII)
 blank_re = re.compile(br'^[ \t\f]*(?:[#\r\n]|$)', re.ASCII)
 
 import token
+<<<<<<< HEAD
 __all__ = token.__all__ + ["tokenize", "detect_encoding",
                            "untokenize", "TokenInfo"]
 del token
@@ -91,6 +99,12 @@ EXACT_TOKEN_TYPES = {
     '@=':  ATEQUAL,
 }
 
+=======
+__all__ = token.__all__ + ["tokenize", "generate_tokens", "detect_encoding",
+                           "untokenize", "TokenInfo"]
+del token
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 class TokenInfo(collections.namedtuple('TokenInfo', 'type string start end line')):
     def __repr__(self):
         annotated_type = '%d (%s)' % (self.type, tok_name[self.type])
@@ -164,6 +178,7 @@ Triple = group(StringPrefix + "'''", StringPrefix + '"""')
 String = group(StringPrefix + r"'[^\n'\\]*(?:\\.[^\n'\\]*)*'",
                StringPrefix + r'"[^\n"\\]*(?:\\.[^\n"\\]*)*"')
 
+<<<<<<< HEAD
 # Because of leftmost-then-longest match semantics, be sure to put the
 # longest operators first (e.g., if = came before ==, == would get
 # recognized as two instances of =).
@@ -175,6 +190,13 @@ Operator = group(r"\*\*=?", r">>=?", r"<<=?", r"!=",
 Bracket = '[][(){}]'
 Special = group(r'\r?\n', r'\.\.\.', r'[:;.,@]')
 Funny = group(Operator, Bracket, Special)
+=======
+# Sorting in reverse order puts the long operators before their prefixes.
+# Otherwise if = came before ==, == would get recognized as two instances
+# of =.
+Special = group(*map(re.escape, sorted(EXACT_TOKEN_TYPES, reverse=True)))
+Funny = group(r'\r?\n', Special)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PlainToken = group(Number, Funny, String, Name)
 Token = Ignore + PlainToken
@@ -278,7 +300,11 @@ class Untokenizer:
         startline = token[0] in (NEWLINE, NL)
         prevstring = False
 
+<<<<<<< HEAD
         for tok in chain([token], iterable):
+=======
+        for tok in _itertools.chain([token], iterable):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             toknum, tokval = tok[:2]
             if toknum == ENCODING:
                 self.encoding = tokval
@@ -470,11 +496,16 @@ def tokenize(readline):
     column where the token begins in the source; a 2-tuple (erow, ecol) of
     ints specifying the row and column where the token ends in the source;
     and the line on which the token was found.  The line passed is the
+<<<<<<< HEAD
     logical line; continuation lines are included.
+=======
+    physical line.
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     The first token sequence will always be an ENCODING token
     which tells you which encoding was used to decode the bytes stream.
     """
+<<<<<<< HEAD
     # This import is here to avoid problems when the itertools module is not
     # built yet and tokenize is imported.
     from itertools import chain, repeat
@@ -482,6 +513,12 @@ def tokenize(readline):
     rl_gen = iter(readline, b"")
     empty = repeat(b"")
     return _tokenize(chain(consumed, rl_gen, empty).__next__, encoding)
+=======
+    encoding, consumed = detect_encoding(readline)
+    empty = _itertools.repeat(b"")
+    rl_gen = _itertools.chain(consumed, iter(readline, b""), empty)
+    return _tokenize(rl_gen.__next__, encoding)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 
 def _tokenize(readline, encoding):
@@ -588,7 +625,11 @@ def _tokenize(readline, encoding):
                     continue
                 token, initial = line[start:end], line[start]
 
+<<<<<<< HEAD
                 if (initial in numchars or                  # ordinary number
+=======
+                if (initial in numchars or                 # ordinary number
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                     (initial == '.' and token != '.' and token != '...')):
                     yield TokenInfo(NUMBER, token, spos, epos, line)
                 elif initial in '\r\n':
@@ -667,9 +708,18 @@ def _tokenize(readline, encoding):
     yield TokenInfo(ENDMARKER, '', (lnum, 0), (lnum, 0), '')
 
 
+<<<<<<< HEAD
 # An undocumented, backwards compatible, API for all the places in the standard
 # library that expect to be able to use tokenize with strings
 def generate_tokens(readline):
+=======
+def generate_tokens(readline):
+    """Tokenize a source reading Python code as unicode strings.
+
+    This has the same API as tokenize(), except that it expects the *readline*
+    callable to return str objects instead of bytes.
+    """
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     return _tokenize(readline, None)
 
 def main():
@@ -677,7 +727,12 @@ def main():
 
     # Helper error handling routines
     def perror(message):
+<<<<<<< HEAD
         print(message, file=sys.stderr)
+=======
+        sys.stderr.write(message)
+        sys.stderr.write('\n')
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def error(message, filename=None, location=None):
         if location:

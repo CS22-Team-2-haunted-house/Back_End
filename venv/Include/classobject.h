@@ -14,6 +14,10 @@ typedef struct {
     PyObject *im_func;   /* The callable object implementing the method */
     PyObject *im_self;   /* The instance it is bound to */
     PyObject *im_weakreflist; /* List of weak references */
+<<<<<<< HEAD
+=======
+    vectorcallfunc vectorcall;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 } PyMethodObject;
 
 PyAPI_DATA(PyTypeObject) PyMethod_Type;

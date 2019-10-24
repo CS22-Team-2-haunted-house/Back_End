@@ -2,9 +2,15 @@
 
 Instead of importing this module directly, import os and refer to
 this module as os.path.  The "os.path" name is an alias for this
+<<<<<<< HEAD
 module on Posix systems; on other systems (e.g. Mac, Windows),
 os.path provides the same operations in a manner specific to that
 platform, and is an alias to another module (e.g. macpath, ntpath).
+=======
+module on Posix systems; on other systems (e.g. Windows),
+os.path provides the same operations in a manner specific to that
+platform, and is an alias to another module (e.g. ntpath).
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 Some of this can actually be useful on non-Posix systems too, e.g.
 for manipulation of the pathname component of URLs.
@@ -51,11 +57,15 @@ def _get_sep(path):
 
 def normcase(s):
     """Normalize case of pathname.  Has no effect under Posix"""
+<<<<<<< HEAD
     s = os.fspath(s)
     if not isinstance(s, (bytes, str)):
         raise TypeError("normcase() argument must be str or bytes, "
                         "not '{}'".format(s.__class__.__name__))
     return s
+=======
+    return os.fspath(s)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 
 # Return whether a path is absolute.
@@ -169,7 +179,11 @@ def islink(path):
     """Test whether a path is a symbolic link"""
     try:
         st = os.lstat(path)
+<<<<<<< HEAD
     except (OSError, AttributeError):
+=======
+    except (OSError, ValueError, AttributeError):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return False
     return stat.S_ISLNK(st.st_mode)
 
@@ -179,7 +193,11 @@ def lexists(path):
     """Test whether a path exists.  Returns True for broken symbolic links"""
     try:
         os.lstat(path)
+<<<<<<< HEAD
     except OSError:
+=======
+    except (OSError, ValueError):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return False
     return True
 
@@ -191,7 +209,11 @@ def ismount(path):
     """Test whether a path is a mount point"""
     try:
         s1 = os.lstat(path)
+<<<<<<< HEAD
     except OSError:
+=======
+    except (OSError, ValueError):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         # It doesn't exist -- so not a mount point. :-)
         return False
     else:
@@ -206,7 +228,11 @@ def ismount(path):
     parent = realpath(parent)
     try:
         s2 = os.lstat(parent)
+<<<<<<< HEAD
     except OSError:
+=======
+    except (OSError, ValueError):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return False
 
     dev1 = s1.st_dev

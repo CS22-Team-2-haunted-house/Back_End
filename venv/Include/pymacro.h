@@ -67,7 +67,11 @@
 
 
 /* Define macros for inline documentation. */
+<<<<<<< HEAD
 #define PyDoc_VAR(name) static char name[]
+=======
+#define PyDoc_VAR(name) static const char name[]
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #define PyDoc_STRVAR(name,str) PyDoc_VAR(name) = PyDoc_STR(str)
 #ifdef WITH_DOC_STRINGS
 #define PyDoc_STR(str) str
@@ -89,6 +93,7 @@
 /* Check if pointer "p" is aligned to "a"-bytes boundary. */
 #define _Py_IS_ALIGNED(p, a) (!((uintptr_t)(p) & (uintptr_t)((a) - 1)))
 
+<<<<<<< HEAD
 #ifdef __GNUC__
 #define Py_UNUSED(name) _unused_ ## name __attribute__((unused))
 #else
@@ -96,5 +101,20 @@
 #endif
 
 #define Py_UNREACHABLE() abort()
+=======
+/* Use this for unused arguments in a function definition to silence compiler
+ * warnings. Example:
+ *
+ * int func(int a, int Py_UNUSED(b)) { return a; }
+ */
+#if defined(__GNUC__) || defined(__clang__)
+#  define Py_UNUSED(name) _unused_ ## name __attribute__((unused))
+#else
+#  define Py_UNUSED(name) _unused_ ## name
+#endif
+
+#define Py_UNREACHABLE() \
+    Py_FatalError("Unreachable C code path reached")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #endif /* Py_PYMACRO_H */

@@ -17,10 +17,19 @@ typedef uint16_t _Py_CODEUNIT;
 #  define _Py_OPARG(word) ((word) >> 8)
 #endif
 
+<<<<<<< HEAD
+=======
+typedef struct _PyOpcache _PyOpcache;
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Bytecode object */
 typedef struct {
     PyObject_HEAD
     int co_argcount;            /* #arguments, except *args */
+<<<<<<< HEAD
+=======
+    int co_posonlyargcount;     /* #positional only arguments */
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     int co_kwonlyargcount;      /* #keyword only arguments */
     int co_nlocals;             /* #local variables */
     int co_stacksize;           /* #entries needed for evaluation stack */
@@ -48,6 +57,24 @@ typedef struct {
        Type is a void* to keep the format private in codeobject.c to force
        people to go through the proper APIs. */
     void *co_extra;
+<<<<<<< HEAD
+=======
+
+    /* Per opcodes just-in-time cache
+     *
+     * To reduce cache size, we use indirect mapping from opcode index to
+     * cache object:
+     *   cache = co_opcache[co_opcache_map[next_instr - first_instr] - 1]
+     */
+
+    // co_opcache_map is indexed by (next_instr - first_instr).
+    //  * 0 means there is no cache for this opcode.
+    //  * n > 0 means there is cache in co_opcache[n-1].
+    unsigned char *co_opcache_map;
+    _PyOpcache *co_opcache;
+    int co_opcache_flag;  // used to determine when create a cache.
+    unsigned char co_opcache_size;  // length of co_opcache.
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 } PyCodeObject;
 
 /* Masks for co_flags above */
@@ -105,6 +132,14 @@ PyAPI_FUNC(PyCodeObject *) PyCode_New(
         int, int, int, int, int, PyObject *, PyObject *,
         PyObject *, PyObject *, PyObject *, PyObject *,
         PyObject *, PyObject *, int, PyObject *);
+<<<<<<< HEAD
+=======
+
+PyAPI_FUNC(PyCodeObject *) PyCode_NewWithPosOnlyArgs(
+        int, int, int, int, int, int, PyObject *, PyObject *,
+        PyObject *, PyObject *, PyObject *, PyObject *,
+        PyObject *, PyObject *, int, PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         /* same as struct above */
 
 /* Creates a new empty code object with the specified source location. */

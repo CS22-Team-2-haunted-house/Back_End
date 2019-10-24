@@ -8,6 +8,7 @@ extern "C" {
 /* Bitset interface */
 
 #define BYTE            char
+<<<<<<< HEAD
 
 typedef BYTE *bitset;
 
@@ -25,6 +26,16 @@ void mergebitset(bitset bs1, bitset bs2, int nbits);
 #define BIT2SHIFT(ibit) ((ibit) % BITSPERBYTE)
 #define BIT2MASK(ibit)  (1 << BIT2SHIFT(ibit))
 #define BYTE2BIT(ibyte) ((ibyte) * BITSPERBYTE)
+=======
+typedef BYTE *bitset;
+
+#define testbit(ss, ibit) (((ss)[BIT2BYTE(ibit)] & BIT2MASK(ibit)) != 0)
+
+#define BITSPERBYTE     (8*sizeof(BYTE))
+#define BIT2BYTE(ibit)  ((ibit) / BITSPERBYTE)
+#define BIT2SHIFT(ibit) ((ibit) % BITSPERBYTE)
+#define BIT2MASK(ibit)  (1 << BIT2SHIFT(ibit))
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifdef __cplusplus
 }

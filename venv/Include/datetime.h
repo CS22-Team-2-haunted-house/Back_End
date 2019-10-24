@@ -180,6 +180,7 @@ typedef struct {
 #define PyDateTime_CAPSULE_NAME "datetime.datetime_CAPI"
 
 
+<<<<<<< HEAD
 #ifdef Py_BUILD_CORE
 
 /* Macros for type checking when building the Python core. */
@@ -200,6 +201,13 @@ typedef struct {
 
 #else
 
+=======
+/* This block is only used as part of the public API and should not be
+ * included in _datetimemodule.c, which does not use the C API capsule.
+ * See bpo-35081 for more details.
+ * */
+#ifndef _PY_DATETIME_IMPL
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Define global variable for the C API and a macro for setting it. */
 static PyDateTime_CAPI *PyDateTimeAPI = NULL;
 
@@ -225,6 +233,10 @@ static PyDateTime_CAPI *PyDateTimeAPI = NULL;
 #define PyTZInfo_Check(op) PyObject_TypeCheck(op, PyDateTimeAPI->TZInfoType)
 #define PyTZInfo_CheckExact(op) (Py_TYPE(op) == PyDateTimeAPI->TZInfoType)
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Macros for accessing constructors in a simplified fashion. */
 #define PyDate_FromDate(year, month, day) \
     PyDateTimeAPI->Date_FromDate(year, month, day, PyDateTimeAPI->DateType)
@@ -264,7 +276,11 @@ static PyDateTime_CAPI *PyDateTimeAPI = NULL;
     PyDateTimeAPI->Date_FromTimestamp( \
         (PyObject*) (PyDateTimeAPI->DateType), args)
 
+<<<<<<< HEAD
 #endif  /* Py_BUILD_CORE */
+=======
+#endif   /* !defined(_PY_DATETIME_IMPL) */
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifdef __cplusplus
 }

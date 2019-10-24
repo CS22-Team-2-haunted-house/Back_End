@@ -13,7 +13,11 @@ extern "C" {
 
 typedef struct {
     int          lb_type;
+<<<<<<< HEAD
     char        *lb_str;
+=======
+    const char  *lb_str;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 } label;
 
 #define EMPTY 0         /* Label number 0 is by definition the empty label */
@@ -22,7 +26,11 @@ typedef struct {
 
 typedef struct {
     int          ll_nlabels;
+<<<<<<< HEAD
     label       *ll_label;
+=======
+    const label *ll_label;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 } labellist;
 
 /* An arc from one state to another */
@@ -36,7 +44,11 @@ typedef struct {
 
 typedef struct {
     int          s_narcs;
+<<<<<<< HEAD
     arc         *s_arc;         /* Array of arcs */
+=======
+    const arc   *s_arc;         /* Array of arcs */
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     /* Optional accelerators */
     int          s_lower;       /* Lowest label index */
@@ -50,7 +62,10 @@ typedef struct {
 typedef struct {
     int          d_type;        /* Non-terminal this represents */
     char        *d_name;        /* For printing */
+<<<<<<< HEAD
     int          d_initial;     /* Initial state */
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     int          d_nstates;
     state       *d_state;       /* Array of states */
     bitset       d_first;
@@ -60,13 +75,19 @@ typedef struct {
 
 typedef struct {
     int          g_ndfas;
+<<<<<<< HEAD
     dfa         *g_dfa;         /* Array of DFAs */
     labellist    g_ll;
+=======
+    const dfa   *g_dfa;         /* Array of DFAs */
+    const labellist g_ll;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     int          g_start;       /* Start symbol of the grammar */
     int          g_accel;       /* Set if accelerators present */
 } grammar;
 
 /* FUNCTIONS */
+<<<<<<< HEAD
 
 grammar *newgrammar(int start);
 void freegrammar(grammar *g);
@@ -88,6 +109,13 @@ void PyGrammar_RemoveAccelerators(grammar *);
 void printgrammar(grammar *g, FILE *fp);
 void printnonterminals(grammar *g, FILE *fp);
 
+=======
+const dfa *PyGrammar_FindDFA(grammar *g, int type);
+const char *PyGrammar_LabelRepr(label *lb);
+void PyGrammar_AddAccelerators(grammar *g);
+void PyGrammar_RemoveAccelerators(grammar *);
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifdef __cplusplus
 }
 #endif

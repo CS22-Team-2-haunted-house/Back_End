@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Thread and interpreter state structures and their interfaces */
 
 
@@ -14,6 +17,7 @@ extern "C" {
 removed (with effort). */
 #define MAX_CO_EXTRA_USERS 255
 
+<<<<<<< HEAD
 /* State shared between threads */
 
 struct _ts; /* Forward */
@@ -304,23 +308,52 @@ typedef struct _ts {
 } PyThreadState;
 #endif   /* !Py_LIMITED_API */
 
+=======
+/* Forward declarations for PyFrameObject, PyThreadState
+   and PyInterpreterState */
+struct _frame;
+struct _ts;
+struct _is;
+
+/* struct _ts is defined in cpython/pystate.h */
+typedef struct _ts PyThreadState;
+/* struct _is is defined in internal/pycore_pystate.h */
+typedef struct _is PyInterpreterState;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(PyInterpreterState *) PyInterpreterState_New(void);
 PyAPI_FUNC(void) PyInterpreterState_Clear(PyInterpreterState *);
 PyAPI_FUNC(void) PyInterpreterState_Delete(PyInterpreterState *);
+<<<<<<< HEAD
+=======
+
+#if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03080000
+/* New in 3.8 */
+PyAPI_FUNC(PyObject *) PyInterpreterState_GetDict(PyInterpreterState *);
+#endif
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03070000
 /* New in 3.7 */
 PyAPI_FUNC(int64_t) PyInterpreterState_GetID(PyInterpreterState *);
 #endif
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) _PyState_AddModule(PyObject*, struct PyModuleDef*);
 #endif /* !Py_LIMITED_API */
 #if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03030000
+=======
+#if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03030000
+
+/* State unique per thread */
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* New in 3.3 */
 PyAPI_FUNC(int) PyState_AddModule(PyObject*, struct PyModuleDef*);
 PyAPI_FUNC(int) PyState_RemoveModule(struct PyModuleDef*);
 #endif
 PyAPI_FUNC(PyObject*) PyState_FindModule(struct PyModuleDef*);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _PyState_ClearModules(void);
 #endif
@@ -367,6 +400,38 @@ PyAPI_FUNC(int) PyThreadState_SetAsyncExc(unsigned long, PyObject *);
 #else
 #  define PyThreadState_GET() PyThreadState_Get()
 #endif
+=======
+
+PyAPI_FUNC(PyThreadState *) PyThreadState_New(PyInterpreterState *);
+PyAPI_FUNC(void) PyThreadState_Clear(PyThreadState *);
+PyAPI_FUNC(void) PyThreadState_Delete(PyThreadState *);
+PyAPI_FUNC(void) PyThreadState_DeleteCurrent(void);
+
+/* Get the current thread state.
+
+   When the current thread state is NULL, this issues a fatal error (so that
+   the caller needn't check for NULL).
+
+   The caller must hold the GIL.
+
+   See also PyThreadState_GET() and _PyThreadState_GET(). */
+PyAPI_FUNC(PyThreadState *) PyThreadState_Get(void);
+
+/* Get the current Python thread state.
+
+   Macro using PyThreadState_Get() or _PyThreadState_GET() depending if
+   pycore_pystate.h is included or not (this header redefines the macro).
+
+   If PyThreadState_Get() is used, issue a fatal error if the current thread
+   state is NULL.
+
+   See also PyThreadState_Get() and _PyThreadState_GET(). */
+#define PyThreadState_GET() PyThreadState_Get()
+
+PyAPI_FUNC(PyThreadState *) PyThreadState_Swap(PyThreadState *);
+PyAPI_FUNC(PyObject *) PyThreadState_GetDict(void);
+PyAPI_FUNC(int) PyThreadState_SetAsyncExc(unsigned long, PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 typedef
     enum {PyGILState_LOCKED, PyGILState_UNLOCKED}
@@ -414,6 +479,7 @@ PyAPI_FUNC(void) PyGILState_Release(PyGILState_STATE);
 */
 PyAPI_FUNC(PyThreadState *) PyGILState_GetThisThreadState(void);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* Helper/diagnostic function - return 1 if the current thread
    currently holds the GIL, 0 otherwise.
@@ -447,6 +513,13 @@ PyAPI_FUNC(PyThreadState *) PyInterpreterState_ThreadHead(PyInterpreterState *);
 PyAPI_FUNC(PyThreadState *) PyThreadState_Next(PyThreadState *);
 
 typedef struct _frame *(*PyThreadFrameGetter)(PyThreadState *self_);
+=======
+
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_PYSTATE_H
+#  include  "cpython/pystate.h"
+#  undef Py_CPYTHON_PYSTATE_H
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifdef __cplusplus

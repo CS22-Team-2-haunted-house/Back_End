@@ -80,7 +80,11 @@ def _compile(code, pattern, flags):
     tolower = None
     fixes = None
     if flags & SRE_FLAG_IGNORECASE and not flags & SRE_FLAG_LOCALE:
+<<<<<<< HEAD
         if flags & SRE_FLAG_UNICODE and not flags & SRE_FLAG_ASCII:
+=======
+        if flags & SRE_FLAG_UNICODE:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             iscased = _sre.unicode_iscased
             tolower = _sre.unicode_tolower
             fixes = _ignorecase_fixes
@@ -196,7 +200,11 @@ def _compile(code, pattern, flags):
                 av = AT_MULTILINE.get(av, av)
             if flags & SRE_FLAG_LOCALE:
                 av = AT_LOCALE.get(av, av)
+<<<<<<< HEAD
             elif (flags & SRE_FLAG_UNICODE) and not (flags & SRE_FLAG_ASCII):
+=======
+            elif flags & SRE_FLAG_UNICODE:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 av = AT_UNICODE.get(av, av)
             emit(av)
         elif op is BRANCH:
@@ -217,7 +225,11 @@ def _compile(code, pattern, flags):
             emit(op)
             if flags & SRE_FLAG_LOCALE:
                 av = CH_LOCALE[av]
+<<<<<<< HEAD
             elif (flags & SRE_FLAG_UNICODE) and not (flags & SRE_FLAG_ASCII):
+=======
+            elif flags & SRE_FLAG_UNICODE:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 av = CH_UNICODE[av]
             emit(av)
         elif op is GROUPREF:
@@ -265,7 +277,11 @@ def _compile_charset(charset, flags, code):
         elif op is CATEGORY:
             if flags & SRE_FLAG_LOCALE:
                 emit(CH_LOCALE[av])
+<<<<<<< HEAD
             elif (flags & SRE_FLAG_UNICODE) and not (flags & SRE_FLAG_ASCII):
+=======
+            elif flags & SRE_FLAG_UNICODE:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 emit(CH_UNICODE[av])
             else:
                 emit(av)
@@ -453,7 +469,11 @@ def _generate_overlap_table(prefix):
 def _get_iscased(flags):
     if not flags & SRE_FLAG_IGNORECASE:
         return None
+<<<<<<< HEAD
     elif flags & SRE_FLAG_UNICODE and not flags & SRE_FLAG_ASCII:
+=======
+    elif flags & SRE_FLAG_UNICODE:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return _sre.unicode_iscased
     else:
         return _sre.ascii_iscased
@@ -597,7 +617,11 @@ def isstring(obj):
 
 def _code(p, flags):
 
+<<<<<<< HEAD
     flags = p.pattern.flags | flags
+=======
+    flags = p.state.flags | flags
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     code = []
 
     # compile info block
@@ -772,13 +796,23 @@ def compile(p, flags=0):
         dis(code)
 
     # map in either direction
+<<<<<<< HEAD
     groupindex = p.pattern.groupdict
     indexgroup = [None] * p.pattern.groups
+=======
+    groupindex = p.state.groupdict
+    indexgroup = [None] * p.state.groups
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     for k, i in groupindex.items():
         indexgroup[i] = k
 
     return _sre.compile(
+<<<<<<< HEAD
         pattern, flags | p.pattern.flags, code,
         p.pattern.groups-1,
+=======
+        pattern, flags | p.state.flags, code,
+        p.state.groups-1,
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         groupindex, tuple(indexgroup)
         )

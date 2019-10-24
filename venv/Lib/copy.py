@@ -75,15 +75,20 @@ def copy(x):
     if copier:
         return copier(x)
 
+<<<<<<< HEAD
     try:
         issc = issubclass(cls, type)
     except TypeError: # cls is not a class
         issc = False
     if issc:
+=======
+    if issubclass(cls, type):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         # treat it as a regular class:
         return _copy_immutable(x)
 
     copier = getattr(cls, "__copy__", None)
+<<<<<<< HEAD
     if copier:
         return copier(x)
 
@@ -93,6 +98,17 @@ def copy(x):
     else:
         reductor = getattr(x, "__reduce_ex__", None)
         if reductor:
+=======
+    if copier is not None:
+        return copier(x)
+
+    reductor = dispatch_table.get(cls)
+    if reductor is not None:
+        rv = reductor(x)
+    else:
+        reductor = getattr(x, "__reduce_ex__", None)
+        if reductor is not None:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             rv = reductor(4)
         else:
             reductor = getattr(x, "__reduce__", None)
@@ -146,6 +162,7 @@ def deepcopy(x, memo=None, _nil=[]):
     cls = type(x)
 
     copier = _deepcopy_dispatch.get(cls)
+<<<<<<< HEAD
     if copier:
         y = copier(x, memo)
     else:
@@ -158,6 +175,16 @@ def deepcopy(x, memo=None, _nil=[]):
         else:
             copier = getattr(x, "__deepcopy__", None)
             if copier:
+=======
+    if copier is not None:
+        y = copier(x, memo)
+    else:
+        if issubclass(cls, type):
+            y = _deepcopy_atomic(x, memo)
+        else:
+            copier = getattr(x, "__deepcopy__", None)
+            if copier is not None:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 y = copier(memo)
             else:
                 reductor = dispatch_table.get(cls)
@@ -165,7 +192,11 @@ def deepcopy(x, memo=None, _nil=[]):
                     rv = reductor(x)
                 else:
                     reductor = getattr(x, "__reduce_ex__", None)
+<<<<<<< HEAD
                     if reductor:
+=======
+                    if reductor is not None:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                         rv = reductor(4)
                     else:
                         reductor = getattr(x, "__reduce__", None)
@@ -198,10 +229,14 @@ d[bool] = _deepcopy_atomic
 d[complex] = _deepcopy_atomic
 d[bytes] = _deepcopy_atomic
 d[str] = _deepcopy_atomic
+<<<<<<< HEAD
 try:
     d[types.CodeType] = _deepcopy_atomic
 except AttributeError:
     pass
+=======
+d[types.CodeType] = _deepcopy_atomic
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 d[type] = _deepcopy_atomic
 d[types.BuiltinFunctionType] = _deepcopy_atomic
 d[types.FunctionType] = _deepcopy_atomic

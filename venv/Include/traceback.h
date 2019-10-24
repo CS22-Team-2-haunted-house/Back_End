@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifndef Py_TRACEBACK_H
 #define Py_TRACEBACK_H
 #ifdef __cplusplus
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 #include "pystate.h"
 
 struct _frame;
@@ -26,11 +30,20 @@ PyAPI_FUNC(int) PyTraceBack_Print(PyObject *, PyObject *);
 PyAPI_FUNC(int) _Py_DisplaySourceLine(PyObject *, PyObject *, int, int);
 PyAPI_FUNC(void) _PyTraceback_Add(const char *, const char *, int);
 #endif
+=======
+struct _frame;
+
+/* Traceback interface */
+
+PyAPI_FUNC(int) PyTraceBack_Here(struct _frame *);
+PyAPI_FUNC(int) PyTraceBack_Print(PyObject *, PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Reveal traceback type so we can typecheck traceback objects */
 PyAPI_DATA(PyTypeObject) PyTraceBack_Type;
 #define PyTraceBack_Check(v) (Py_TYPE(v) == &PyTraceBack_Type)
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* Write the Python traceback into the file 'fd'. For example:
 
@@ -112,6 +125,14 @@ PyAPI_FUNC(void) _Py_DumpHexadecimal(
     Py_ssize_t width);
 
 #endif   /* !Py_LIMITED_API */
+=======
+
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_TRACEBACK_H
+#  include  "cpython/traceback.h"
+#  undef Py_CPYTHON_TRACEBACK_H
+#endif
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifdef __cplusplus
 }

@@ -4,7 +4,10 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Dictionary object type -- mapping from hashable object to object */
 
 /* The distribution includes a separate file, Objects/dictnotes.txt,
@@ -13,6 +16,7 @@ extern "C" {
    tuning dictionaries, and several ideas for possible optimizations.
 */
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 
 typedef struct _dictkeysobject PyDictKeysObject;
@@ -54,10 +58,14 @@ PyAPI_DATA(PyTypeObject) PyDictIterItem_Type;
 PyAPI_DATA(PyTypeObject) PyDictKeys_Type;
 PyAPI_DATA(PyTypeObject) PyDictItems_Type;
 PyAPI_DATA(PyTypeObject) PyDictValues_Type;
+=======
+PyAPI_DATA(PyTypeObject) PyDict_Type;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #define PyDict_Check(op) \
                  PyType_FastSubclass(Py_TYPE(op), Py_TPFLAGS_DICT_SUBCLASS)
 #define PyDict_CheckExact(op) (Py_TYPE(op) == &PyDict_Type)
+<<<<<<< HEAD
 #define PyDictKeys_Check(op) PyObject_TypeCheck(op, &PyDictKeys_Type)
 #define PyDictItems_Check(op) PyObject_TypeCheck(op, &PyDictItems_Type)
 #define PyDictValues_Check(op) PyObject_TypeCheck(op, &PyDictValues_Type)
@@ -101,12 +109,24 @@ PyAPI_FUNC(int) _PyDict_Next(
     PyObject *mp, Py_ssize_t *pos, PyObject **key, PyObject **value, Py_hash_t *hash);
 PyObject *_PyDictView_New(PyObject *, PyTypeObject *);
 #endif
+=======
+
+PyAPI_FUNC(PyObject *) PyDict_New(void);
+PyAPI_FUNC(PyObject *) PyDict_GetItem(PyObject *mp, PyObject *key);
+PyAPI_FUNC(PyObject *) PyDict_GetItemWithError(PyObject *mp, PyObject *key);
+PyAPI_FUNC(int) PyDict_SetItem(PyObject *mp, PyObject *key, PyObject *item);
+PyAPI_FUNC(int) PyDict_DelItem(PyObject *mp, PyObject *key);
+PyAPI_FUNC(void) PyDict_Clear(PyObject *mp);
+PyAPI_FUNC(int) PyDict_Next(
+    PyObject *mp, Py_ssize_t *pos, PyObject **key, PyObject **value);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(PyObject *) PyDict_Keys(PyObject *mp);
 PyAPI_FUNC(PyObject *) PyDict_Values(PyObject *mp);
 PyAPI_FUNC(PyObject *) PyDict_Items(PyObject *mp);
 PyAPI_FUNC(Py_ssize_t) PyDict_Size(PyObject *mp);
 PyAPI_FUNC(PyObject *) PyDict_Copy(PyObject *mp);
 PyAPI_FUNC(int) PyDict_Contains(PyObject *mp, PyObject *key);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* Get the number of items of a dictionary. */
 #define PyDict_GET_SIZE(mp)  (assert(PyDict_Check(mp)),((PyDictObject *)mp)->ma_used)
@@ -123,6 +143,8 @@ PyObject *_PyDict_FromKeys(PyObject *, PyObject *, PyObject *);
 
 PyAPI_FUNC(int) PyDict_ClearFreeList(void);
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* PyDict_Update(mp, other) is equivalent to PyDict_Merge(mp, other, 1). */
 PyAPI_FUNC(int) PyDict_Update(PyObject *mp, PyObject *other);
@@ -133,6 +155,7 @@ PyAPI_FUNC(int) PyDict_Update(PyObject *mp, PyObject *other);
    dict.update(other) is equivalent to PyDict_Merge(dict, other, 1).
 */
 PyAPI_FUNC(int) PyDict_Merge(PyObject *mp,
+<<<<<<< HEAD
                                    PyObject *other,
                                    int override);
 
@@ -145,6 +168,10 @@ PyAPI_FUNC(int) PyDict_Merge(PyObject *mp,
 PyAPI_FUNC(int) _PyDict_MergeEx(PyObject *mp, PyObject *other, int override);
 PyAPI_FUNC(PyObject *) _PyDictView_Intersect(PyObject* self, PyObject *other);
 #endif
+=======
+                             PyObject *other,
+                             int override);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* PyDict_MergeFromSeq2 updates/merges from an iterable object producing
    iterable objects of length 2.  If override is true, the last occurrence
@@ -152,6 +179,7 @@ PyAPI_FUNC(PyObject *) _PyDictView_Intersect(PyObject* self, PyObject *other);
    is equivalent to dict={}; PyDict_MergeFromSeq(dict, seq2, 1).
 */
 PyAPI_FUNC(int) PyDict_MergeFromSeq2(PyObject *d,
+<<<<<<< HEAD
                                            PyObject *seq2,
                                            int override);
 
@@ -171,6 +199,43 @@ PyAPI_FUNC(void) _PyDict_DebugMallocStats(FILE *out);
 
 int _PyObjectDict_SetItem(PyTypeObject *tp, PyObject **dictptr, PyObject *name, PyObject *value);
 PyObject *_PyDict_LoadGlobal(PyDictObject *, PyDictObject *, PyObject *);
+=======
+                                     PyObject *seq2,
+                                     int override);
+
+PyAPI_FUNC(PyObject *) PyDict_GetItemString(PyObject *dp, const char *key);
+PyAPI_FUNC(int) PyDict_SetItemString(PyObject *dp, const char *key, PyObject *item);
+PyAPI_FUNC(int) PyDict_DelItemString(PyObject *dp, const char *key);
+
+/* Dictionary (keys, values, items) views */
+
+PyAPI_DATA(PyTypeObject) PyDictKeys_Type;
+PyAPI_DATA(PyTypeObject) PyDictValues_Type;
+PyAPI_DATA(PyTypeObject) PyDictItems_Type;
+
+#define PyDictKeys_Check(op) PyObject_TypeCheck(op, &PyDictKeys_Type)
+#define PyDictValues_Check(op) PyObject_TypeCheck(op, &PyDictValues_Type)
+#define PyDictItems_Check(op) PyObject_TypeCheck(op, &PyDictItems_Type)
+/* This excludes Values, since they are not sets. */
+# define PyDictViewSet_Check(op) \
+    (PyDictKeys_Check(op) || PyDictItems_Check(op))
+
+/* Dictionary (key, value, items) iterators */
+
+PyAPI_DATA(PyTypeObject) PyDictIterKey_Type;
+PyAPI_DATA(PyTypeObject) PyDictIterValue_Type;
+PyAPI_DATA(PyTypeObject) PyDictIterItem_Type;
+
+PyAPI_DATA(PyTypeObject) PyDictRevIterKey_Type;
+PyAPI_DATA(PyTypeObject) PyDictRevIterItem_Type;
+PyAPI_DATA(PyTypeObject) PyDictRevIterValue_Type;
+
+
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_DICTOBJECT_H
+#  include  "cpython/dictobject.h"
+#  undef Py_CPYTHON_DICTOBJECT_H
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifdef __cplusplus

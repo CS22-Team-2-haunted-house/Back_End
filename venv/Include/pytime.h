@@ -17,8 +17,13 @@ extern "C" {
    store a duration, and so indirectly a date (related to another date, like
    UNIX epoch). */
 typedef int64_t _PyTime_t;
+<<<<<<< HEAD
 #define _PyTime_MIN PY_LLONG_MIN
 #define _PyTime_MAX PY_LLONG_MAX
+=======
+#define _PyTime_MIN INT64_MIN
+#define _PyTime_MAX INT64_MAX
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 typedef enum {
     /* Round towards minus infinity (-inf).

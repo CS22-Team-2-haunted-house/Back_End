@@ -9,6 +9,7 @@ def insort_right(a, x, lo=0, hi=None):
     slice of a to be searched.
     """
 
+<<<<<<< HEAD
     if lo < 0:
         raise ValueError('lo must be non-negative')
     if hi is None:
@@ -17,6 +18,9 @@ def insort_right(a, x, lo=0, hi=None):
         mid = (lo+hi)//2
         if x < a[mid]: hi = mid
         else: lo = mid+1
+=======
+    lo = bisect_right(a, x, lo, hi)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     a.insert(lo, x)
 
 def bisect_right(a, x, lo=0, hi=None):
@@ -49,6 +53,7 @@ def insort_left(a, x, lo=0, hi=None):
     slice of a to be searched.
     """
 
+<<<<<<< HEAD
     if lo < 0:
         raise ValueError('lo must be non-negative')
     if hi is None:
@@ -57,6 +62,9 @@ def insort_left(a, x, lo=0, hi=None):
         mid = (lo+hi)//2
         if a[mid] < x: lo = mid+1
         else: hi = mid
+=======
+    lo = bisect_left(a, x, lo, hi)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     a.insert(lo, x)
 
 

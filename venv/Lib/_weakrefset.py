@@ -194,3 +194,9 @@ class WeakSet:
 
     def isdisjoint(self, other):
         return len(self.intersection(other)) == 0
+<<<<<<< HEAD
+=======
+
+    def __repr__(self):
+        return repr(self.data)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78

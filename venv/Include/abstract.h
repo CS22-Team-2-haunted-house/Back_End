@@ -138,9 +138,12 @@ extern "C" {
 #ifdef PY_SSIZE_T_CLEAN
 #  define PyObject_CallFunction _PyObject_CallFunction_SizeT
 #  define PyObject_CallMethod _PyObject_CallMethod_SizeT
+<<<<<<< HEAD
 #  ifndef Py_LIMITED_API
 #    define _PyObject_CallMethodId _PyObject_CallMethodId_SizeT
 #  endif /* !Py_LIMITED_API */
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 
@@ -155,6 +158,7 @@ extern "C" {
 PyAPI_FUNC(PyObject *) PyObject_Call(PyObject *callable,
                                      PyObject *args, PyObject *kwargs);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(PyObject*) _PyStack_AsTuple(
     PyObject *const *stack,
@@ -272,6 +276,8 @@ PyAPI_FUNC(PyObject *) _Py_CheckFunctionResult(PyObject *callable,
                                                const char *where);
 #endif   /* Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Call a callable Python object 'callable', with arguments given by the
    tuple 'args'.  If no arguments are needed, then 'args' can be *NULL*.
@@ -309,6 +315,7 @@ PyAPI_FUNC(PyObject *) PyObject_CallMethod(PyObject *obj,
                                            const char *name,
                                            const char *format, ...);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* Like PyObject_CallMethod(), but expect a _Py_Identifier*
    as the method name. */
@@ -317,6 +324,8 @@ PyAPI_FUNC(PyObject *) _PyObject_CallMethodId(PyObject *obj,
                                               const char *format, ...);
 #endif /* !Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(PyObject *) _PyObject_CallFunction_SizeT(PyObject *callable,
                                                     const char *format,
                                                     ...);
@@ -326,6 +335,7 @@ PyAPI_FUNC(PyObject *) _PyObject_CallMethod_SizeT(PyObject *obj,
                                                   const char *format,
                                                   ...);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(PyObject *) _PyObject_CallMethodId_SizeT(PyObject *obj,
                                                     _Py_Identifier *name,
@@ -333,6 +343,8 @@ PyAPI_FUNC(PyObject *) _PyObject_CallMethodId_SizeT(PyObject *obj,
                                                     ...);
 #endif /* !Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Call a callable Python object 'callable' with a variable number of C
    arguments. The C arguments are provided as PyObject* values, terminated
    by a NULL.
@@ -357,6 +369,7 @@ PyAPI_FUNC(PyObject *) PyObject_CallMethodObjArgs(
     PyObject *name,
     ...);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(PyObject *) _PyObject_CallMethodIdObjArgs(
     PyObject *obj,
@@ -364,6 +377,8 @@ PyAPI_FUNC(PyObject *) _PyObject_CallMethodIdObjArgs(
     ...);
 #endif /* !Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Implemented elsewhere:
 
@@ -418,6 +433,7 @@ PyAPI_FUNC(Py_ssize_t) PyObject_Size(PyObject *o);
 PyAPI_FUNC(Py_ssize_t) PyObject_Length(PyObject *o);
 #define PyObject_Length PyObject_Size
 
+<<<<<<< HEAD
 
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) _PyObject_HasLen(PyObject *o);
@@ -428,6 +444,8 @@ PyAPI_FUNC(int) _PyObject_HasLen(PyObject *o);
 PyAPI_FUNC(Py_ssize_t) PyObject_LengthHint(PyObject *o, Py_ssize_t);
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Return element of 'o' corresponding to the object 'key'. Return NULL
   on failure.
 
@@ -468,17 +486,28 @@ PyAPI_FUNC(int) PyObject_DelItem(PyObject *o, PyObject *key);
 
    Return 0 on success.  buffer and buffer_len are only set in case no error
    occurs. Otherwise, -1 is returned and an exception set. */
+<<<<<<< HEAD
 PyAPI_FUNC(int) PyObject_AsCharBuffer(PyObject *obj,
                                       const char **buffer,
                                       Py_ssize_t *buffer_len)
                                       Py_DEPRECATED(3.0);
+=======
+Py_DEPRECATED(3.0)
+PyAPI_FUNC(int) PyObject_AsCharBuffer(PyObject *obj,
+                                      const char **buffer,
+                                      Py_ssize_t *buffer_len);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Checks whether an arbitrary object supports the (character, single segment)
    buffer interface.
 
    Returns 1 on success, 0 on failure. */
+<<<<<<< HEAD
 PyAPI_FUNC(int) PyObject_CheckReadBuffer(PyObject *obj)
                                          Py_DEPRECATED(3.0);
+=======
+Py_DEPRECATED(3.0) PyAPI_FUNC(int) PyObject_CheckReadBuffer(PyObject *obj);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Same as PyObject_AsCharBuffer() except that this API expects (readable,
    single segment) buffer interface and returns a pointer to a read-only memory
@@ -486,10 +515,17 @@ PyAPI_FUNC(int) PyObject_CheckReadBuffer(PyObject *obj)
 
    0 is returned on success.  buffer and buffer_len are only set in case no
    error occurs.  Otherwise, -1 is returned and an exception set. */
+<<<<<<< HEAD
 PyAPI_FUNC(int) PyObject_AsReadBuffer(PyObject *obj,
                                       const void **buffer,
                                       Py_ssize_t *buffer_len)
                                       Py_DEPRECATED(3.0);
+=======
+Py_DEPRECATED(3.0)
+PyAPI_FUNC(int) PyObject_AsReadBuffer(PyObject *obj,
+                                      const void **buffer,
+                                      Py_ssize_t *buffer_len);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Takes an arbitrary object which must support the (writable, single segment)
    buffer interface and returns a pointer to a writable memory location in
@@ -497,14 +533,22 @@ PyAPI_FUNC(int) PyObject_AsReadBuffer(PyObject *obj,
 
    Return 0 on success.  buffer and buffer_len are only set in case no error
    occurs. Otherwise, -1 is returned and an exception set. */
+<<<<<<< HEAD
 PyAPI_FUNC(int) PyObject_AsWriteBuffer(PyObject *obj,
                                        void **buffer,
                                        Py_ssize_t *buffer_len)
                                        Py_DEPRECATED(3.0);
+=======
+Py_DEPRECATED(3.0)
+PyAPI_FUNC(int) PyObject_AsWriteBuffer(PyObject *obj,
+                                       void **buffer,
+                                       Py_ssize_t *buffer_len);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 
 /* === New Buffer API ============================================ */
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 
 /* Return 1 if the getbuffer function is available, otherwise return 0. */
@@ -577,6 +621,8 @@ PyAPI_FUNC(void) PyBuffer_Release(Py_buffer *view);
 
 #endif /* Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Takes an arbitrary object and returns the result of calling
    obj.__format__(format_spec). */
 PyAPI_FUNC(PyObject *) PyObject_Format(PyObject *obj,
@@ -590,9 +636,16 @@ PyAPI_FUNC(PyObject *) PyObject_Format(PyObject *obj,
    returns itself. */
 PyAPI_FUNC(PyObject *) PyObject_GetIter(PyObject *);
 
+<<<<<<< HEAD
 #define PyIter_Check(obj) \
     ((obj)->ob_type->tp_iternext != NULL && \
      (obj)->ob_type->tp_iternext != &_PyObject_NextNotImplemented)
+=======
+/* Returns 1 if the object 'obj' provides iterator protocols, and 0 otherwise.
+
+   This function always succeeds. */
+PyAPI_FUNC(int) PyIter_Check(PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Takes an iterator object and calls its tp_iternext slot,
    returning the next value.
@@ -710,9 +763,15 @@ PyAPI_FUNC(PyObject *) PyNumber_Xor(PyObject *o1, PyObject *o2);
    This is the equivalent of the Python expression: o1 | o2. */
 PyAPI_FUNC(PyObject *) PyNumber_Or(PyObject *o1, PyObject *o2);
 
+<<<<<<< HEAD
 #define PyIndex_Check(obj)                              \
     ((obj)->ob_type->tp_as_number != NULL &&            \
      (obj)->ob_type->tp_as_number->nb_index != NULL)
+=======
+/* Returns 1 if obj is an index integer (has the nb_index slot of the
+   tp_as_number structure filled in), and 0 otherwise. */
+PyAPI_FUNC(int) PyIndex_Check(PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* Returns the object 'o' converted to a Python int, or NULL with an exception
    raised on failure. */
@@ -919,11 +978,14 @@ PyAPI_FUNC(PyObject *) PySequence_Fast(PyObject *o, const char* m);
 #define PySequence_Fast_GET_ITEM(o, i)\
      (PyList_Check(o) ? PyList_GET_ITEM(o, i) : PyTuple_GET_ITEM(o, i))
 
+<<<<<<< HEAD
 /* Assume tp_as_sequence and sq_item exist and that 'i' does not
    need to be corrected for a negative index. */
 #define PySequence_ITEM(o, i)\
     ( Py_TYPE(o)->tp_as_sequence->sq_item(o, i) )
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Return a pointer to the underlying item array for
    an object retured by PySequence_Fast */
 #define PySequence_Fast_ITEMS(sf) \
@@ -943,6 +1005,7 @@ PyAPI_FUNC(Py_ssize_t) PySequence_Count(PyObject *o, PyObject *value);
    Use __contains__ if possible, else _PySequence_IterSearch(). */
 PyAPI_FUNC(int) PySequence_Contains(PyObject *seq, PyObject *ob);
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 #define PY_ITERSEARCH_COUNT    1
 #define PY_ITERSEARCH_INDEX    2
@@ -964,6 +1027,8 @@ PyAPI_FUNC(Py_ssize_t) _PySequence_IterSearch(PyObject *seq,
 #endif
 
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* For DLL-level backwards compatibility */
 #undef PySequence_In
 /* Determine if the sequence 'o' contains 'value'. If an item in 'o' is equal
@@ -1082,6 +1147,7 @@ PyAPI_FUNC(int) PyObject_IsInstance(PyObject *object, PyObject *typeorclass);
 /* issubclass(object, typeorclass) */
 PyAPI_FUNC(int) PyObject_IsSubclass(PyObject *object, PyObject *typeorclass);
 
+<<<<<<< HEAD
 
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) _PyObject_RealIsInstance(PyObject *inst, PyObject *cls);
@@ -1102,6 +1168,13 @@ PyAPI_FUNC(void) _Py_add_one_to_index_C(int nd, Py_ssize_t *index,
 PyAPI_FUNC(int) _Py_convert_optional_to_ssize_t(PyObject *, void *);
 #endif /* !Py_LIMITED_API */
 
+=======
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_ABSTRACTOBJECT_H
+#  include  "cpython/abstract.h"
+#  undef Py_CPYTHON_ABSTRACTOBJECT_H
+#endif
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifdef __cplusplus
 }

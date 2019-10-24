@@ -1,6 +1,10 @@
 @echo off
 
+<<<<<<< HEAD
 set "VIRTUAL_ENV=C:\Users\mitch\LambdaSchool\Back_End\venv"
+=======
+set "VIRTUAL_ENV=C:\Users\BENLOP~1\Back_End\venv"
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 if defined _OLD_VIRTUAL_PROMPT (
     set "PROMPT=%_OLD_VIRTUAL_PROMPT%"

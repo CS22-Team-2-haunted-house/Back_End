@@ -1,3 +1,6 @@
+#Don't track content of venv
+venv/
+
 .DS_Store
 .env
 

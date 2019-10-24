@@ -314,14 +314,23 @@ def warn(message, category=None, stacklevel=1, source=None):
                     raise ValueError
     except ValueError:
         globals = sys.__dict__
+<<<<<<< HEAD
         lineno = 1
     else:
         globals = frame.f_globals
+=======
+        filename = "sys"
+        lineno = 1
+    else:
+        globals = frame.f_globals
+        filename = frame.f_code.co_filename
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         lineno = frame.f_lineno
     if '__name__' in globals:
         module = globals['__name__']
     else:
         module = "<string>"
+<<<<<<< HEAD
     filename = globals.get('__file__')
     if filename:
         fnl = filename.lower()
@@ -336,6 +345,8 @@ def warn(message, category=None, stacklevel=1, source=None):
                 filename = '__main__'
         if not filename:
             filename = module
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     registry = globals.setdefault("__warningregistry__", {})
     warn_explicit(message, category, filename, lineno, module, registry,
                   globals, source)

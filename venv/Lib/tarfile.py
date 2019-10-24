@@ -105,7 +105,11 @@ SOLARIS_XHDTYPE = b"X"          # Solaris extended header
 USTAR_FORMAT = 0                # POSIX.1-1988 (ustar) format
 GNU_FORMAT = 1                  # GNU tar format
 PAX_FORMAT = 2                  # POSIX.1-2001 (pax) format
+<<<<<<< HEAD
 DEFAULT_FORMAT = GNU_FORMAT
+=======
+DEFAULT_FORMAT = PAX_FORMAT
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #---------------------------------------------------------
 # tarfile constants
@@ -256,6 +260,7 @@ def copyfileobj(src, dst, length=None, exception=OSError, bufsize=None):
         dst.write(buf)
     return
 
+<<<<<<< HEAD
 def filemode(mode):
     """Deprecated in this location; use stat.filemode."""
     import warnings
@@ -263,6 +268,8 @@ def filemode(mode):
                   DeprecationWarning, 2)
     return stat.filemode(mode)
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 def _safe_print(s):
     encoding = getattr(sys.stdout, 'encoding', None)
     if encoding is not None:
@@ -520,6 +527,7 @@ class _Stream:
             raise StreamError("seeking backwards is not allowed")
         return self.pos
 
+<<<<<<< HEAD
     def read(self, size=None):
         """Return the next size number of bytes from the stream.
            If size is not defined, return all bytes of the stream
@@ -535,6 +543,12 @@ class _Stream:
             buf = b"".join(t)
         else:
             buf = self._read(size)
+=======
+    def read(self, size):
+        """Return the next size number of bytes from the stream."""
+        assert size is not None
+        buf = self._read(size)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         self.pos += len(buf)
         return buf
 
@@ -547,9 +561,20 @@ class _Stream:
         c = len(self.dbuf)
         t = [self.dbuf]
         while c < size:
+<<<<<<< HEAD
             buf = self.__read(self.bufsize)
             if not buf:
                 break
+=======
+            # Skip underlying buffer to avoid unaligned double buffering.
+            if self.buf:
+                buf = self.buf
+                self.buf = b""
+            else:
+                buf = self.fileobj.read(self.bufsize)
+                if not buf:
+                    break
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             try:
                 buf = self.cmp.decompress(buf)
             except self.exception:
@@ -730,11 +755,40 @@ class TarInfo(object):
        usually created internally.
     """
 
+<<<<<<< HEAD
     __slots__ = ("name", "mode", "uid", "gid", "size", "mtime",
                  "chksum", "type", "linkname", "uname", "gname",
                  "devmajor", "devminor",
                  "offset", "offset_data", "pax_headers", "sparse",
                  "tarfile", "_sparse_structs", "_link_target")
+=======
+    __slots__ = dict(
+        name = 'Name of the archive member.',
+        mode = 'Permission bits.',
+        uid = 'User ID of the user who originally stored this member.',
+        gid = 'Group ID of the user who originally stored this member.',
+        size = 'Size in bytes.',
+        mtime = 'Time of last modification.',
+        chksum = 'Header checksum.',
+        type = ('File type. type is usually one of these constants: '
+                'REGTYPE, AREGTYPE, LNKTYPE, SYMTYPE, DIRTYPE, FIFOTYPE, '
+                'CONTTYPE, CHRTYPE, BLKTYPE, GNUTYPE_SPARSE.'),
+        linkname = ('Name of the target file name, which is only present '
+                    'in TarInfo objects of type LNKTYPE and SYMTYPE.'),
+        uname = 'User name.',
+        gname = 'Group name.',
+        devmajor = 'Device major number.',
+        devminor = 'Device minor number.',
+        offset = 'The tar header starts here.',
+        offset_data = "The file's data starts here.",
+        pax_headers = ('A dictionary containing key-value pairs of an '
+                       'associated pax extended header.'),
+        sparse = 'Sparse member information.',
+        tarfile = None,
+        _sparse_structs = None,
+        _link_target = None,
+        )
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def __init__(self, name=""):
         """Construct a TarInfo object. name is the optional name
@@ -760,10 +814,16 @@ class TarInfo(object):
         self.sparse = None      # sparse member information
         self.pax_headers = {}   # pax header information
 
+<<<<<<< HEAD
     # In pax headers the "name" and "linkname" field are called
     # "path" and "linkpath".
     @property
     def path(self):
+=======
+    @property
+    def path(self):
+        'In pax headers, "name" is called "path".'
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return self.name
 
     @path.setter
@@ -772,6 +832,10 @@ class TarInfo(object):
 
     @property
     def linkpath(self):
+<<<<<<< HEAD
+=======
+        'In pax headers, "linkname" is called "linkpath".'
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return self.linkname
 
     @linkpath.setter
@@ -1363,6 +1427,7 @@ class TarInfo(object):
         return blocks * BLOCKSIZE
 
     def isreg(self):
+<<<<<<< HEAD
         return self.type in REGULAR_TYPES
     def isfile(self):
         return self.isreg()
@@ -1381,6 +1446,44 @@ class TarInfo(object):
     def issparse(self):
         return self.sparse is not None
     def isdev(self):
+=======
+        'Return True if the Tarinfo object is a regular file.'
+        return self.type in REGULAR_TYPES
+
+    def isfile(self):
+        'Return True if the Tarinfo object is a regular file.'
+        return self.isreg()
+
+    def isdir(self):
+        'Return True if it is a directory.'
+        return self.type == DIRTYPE
+
+    def issym(self):
+        'Return True if it is a symbolic link.'
+        return self.type == SYMTYPE
+
+    def islnk(self):
+        'Return True if it is a hard link.'
+        return self.type == LNKTYPE
+
+    def ischr(self):
+        'Return True if it is a character device.'
+        return self.type == CHRTYPE
+
+    def isblk(self):
+        'Return True if it is a block device.'
+        return self.type == BLKTYPE
+
+    def isfifo(self):
+        'Return True if it is a FIFO.'
+        return self.type == FIFOTYPE
+
+    def issparse(self):
+        return self.sparse is not None
+
+    def isdev(self):
+        'Return True if it is one of character device, block device or FIFO.'
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return self.type in (CHRTYPE, BLKTYPE, FIFOTYPE)
 # class TarInfo
 
@@ -1800,10 +1903,16 @@ class TarFile(object):
         tarinfo = self.tarinfo()
         tarinfo.tarfile = self  # Not needed
 
+<<<<<<< HEAD
         # Use os.stat or os.lstat, depending on platform
         # and if symlinks shall be resolved.
         if fileobj is None:
             if hasattr(os, "lstat") and not self.dereference:
+=======
+        # Use os.stat or os.lstat, depending on if symlinks shall be resolved.
+        if fileobj is None:
+            if not self.dereference:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 statres = os.lstat(name)
             else:
                 statres = os.stat(name)
@@ -2248,11 +2357,18 @@ class TarFile(object):
     def chmod(self, tarinfo, targetpath):
         """Set file permissions of targetpath according to tarinfo.
         """
+<<<<<<< HEAD
         if hasattr(os, 'chmod'):
             try:
                 os.chmod(targetpath, tarinfo.mode)
             except OSError:
                 raise ExtractError("could not change mode")
+=======
+        try:
+            os.chmod(targetpath, tarinfo.mode)
+        except OSError:
+            raise ExtractError("could not change mode")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def utime(self, tarinfo, targetpath):
         """Set modification time of targetpath according to tarinfo.

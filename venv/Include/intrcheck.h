@@ -15,7 +15,11 @@ PyAPI_FUNC(void) PyOS_AfterFork_Child(void);
 #endif
 #endif
 /* Deprecated, please use PyOS_AfterFork_Child() instead */
+<<<<<<< HEAD
 PyAPI_FUNC(void) PyOS_AfterFork(void) Py_DEPRECATED(3.7);
+=======
+Py_DEPRECATED(3.7) PyAPI_FUNC(void) PyOS_AfterFork(void);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(int) _PyOS_IsMainThread(void);

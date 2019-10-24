@@ -257,6 +257,7 @@ def contents(package: Package) -> Iterable[str]:
     else:
         package_directory = Path(package.__spec__.origin).parent
         return os.listdir(package_directory)
+<<<<<<< HEAD
 
 
 # Private implementation of ResourceReader and get_resource_reader() called
@@ -341,3 +342,5 @@ def _zipimport_get_resource_reader(zipimporter, fullname):
     except ZipImportError:
         return None
     return _ZipImportResourceReader(zipimporter, fullname)
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78

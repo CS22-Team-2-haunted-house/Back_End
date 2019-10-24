@@ -99,6 +99,7 @@ class WeakValueDictionary(_collections_abc.MutableMapping):
     # objects are unwrapped on the way out, and we always wrap on the
     # way in).
 
+<<<<<<< HEAD
     def __init__(*args, **kw):
         if not args:
             raise TypeError("descriptor '__init__' of 'WeakValueDictionary' "
@@ -106,6 +107,9 @@ class WeakValueDictionary(_collections_abc.MutableMapping):
         self, *args = args
         if len(args) > 1:
             raise TypeError('expected at most 1 arguments, got %d' % len(args))
+=======
+    def __init__(self, other=(), /, **kw):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         def remove(wr, selfref=ref(self), _atomic_removal=_remove_dead_weakref):
             self = selfref()
             if self is not None:
@@ -114,13 +118,22 @@ class WeakValueDictionary(_collections_abc.MutableMapping):
                 else:
                     # Atomic removal is necessary since this function
                     # can be called asynchronously by the GC
+<<<<<<< HEAD
                     _atomic_removal(d, wr.key)
+=======
+                    _atomic_removal(self.data, wr.key)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         self._remove = remove
         # A list of keys to be removed
         self._pending_removals = []
         self._iterating = set()
+<<<<<<< HEAD
         self.data = d = {}
         self.update(*args, **kw)
+=======
+        self.data = {}
+        self.update(other, **kw)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def _commit_removals(self):
         l = self._pending_removals
@@ -287,6 +300,7 @@ class WeakValueDictionary(_collections_abc.MutableMapping):
         else:
             return o
 
+<<<<<<< HEAD
     def update(*args, **kwargs):
         if not args:
             raise TypeError("descriptor 'update' of 'WeakValueDictionary' "
@@ -305,6 +319,19 @@ class WeakValueDictionary(_collections_abc.MutableMapping):
                 d[key] = KeyedRef(o, self._remove, key)
         if len(kwargs):
             self.update(kwargs)
+=======
+    def update(self, other=None, /, **kwargs):
+        if self._pending_removals:
+            self._commit_removals()
+        d = self.data
+        if other is not None:
+            if not hasattr(other, "items"):
+                other = dict(other)
+            for key, o in other.items():
+                d[key] = KeyedRef(o, self._remove, key)
+        for key, o in kwargs.items():
+            d[key] = KeyedRef(o, self._remove, key)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def valuerefs(self):
         """Return a list of weak references to the values.
@@ -488,7 +515,11 @@ class WeakKeyDictionary(_collections_abc.MutableMapping):
     def setdefault(self, key, default=None):
         return self.data.setdefault(ref(key, self._remove),default)
 
+<<<<<<< HEAD
     def update(self, dict=None, **kwargs):
+=======
+    def update(self, dict=None, /, **kwargs):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         d = self.data
         if dict is not None:
             if not hasattr(dict, "items"):
@@ -540,12 +571,24 @@ class finalize:
             func = kwargs.pop('func')
             if len(args) >= 2:
                 self, obj, *args = args
+<<<<<<< HEAD
+=======
+                import warnings
+                warnings.warn("Passing 'func' as keyword argument is deprecated",
+                              DeprecationWarning, stacklevel=2)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             else:
                 if 'obj' not in kwargs:
                     raise TypeError('finalize expected at least 2 positional '
                                     'arguments, got %d' % (len(args)-1))
                 obj = kwargs.pop('obj')
                 self, *args = args
+<<<<<<< HEAD
+=======
+                import warnings
+                warnings.warn("Passing 'obj' as keyword argument is deprecated",
+                              DeprecationWarning, stacklevel=2)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         args = tuple(args)
 
         if not self._registered_with_atexit:
@@ -563,6 +606,10 @@ class finalize:
         info.index = next(self._index_iter)
         self._registry[self] = info
         finalize._dirty = True
+<<<<<<< HEAD
+=======
+    __init__.__text_signature__ = '($self, obj, func, /, *args, **kwargs)'
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     def __call__(self, _=None):
         """If alive then mark as dead and return func(*args, **kwargs);

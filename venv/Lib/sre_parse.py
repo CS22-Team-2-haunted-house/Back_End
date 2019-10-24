@@ -71,8 +71,13 @@ GLOBAL_FLAGS = SRE_FLAG_DEBUG | SRE_FLAG_TEMPLATE
 class Verbose(Exception):
     pass
 
+<<<<<<< HEAD
 class Pattern:
     # master pattern object.  keeps track of global attributes
+=======
+class State:
+    # keeps track of state for parsing
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     def __init__(self):
         self.flags = 0
         self.groupdict = {}
@@ -108,8 +113,13 @@ class Pattern:
 
 class SubPattern:
     # a subpattern, in intermediate form
+<<<<<<< HEAD
     def __init__(self, pattern, data=None):
         self.pattern = pattern
+=======
+    def __init__(self, state, data=None):
+        self.state = state
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         if data is None:
             data = []
         self.data = data
@@ -163,7 +173,11 @@ class SubPattern:
         del self.data[index]
     def __getitem__(self, index):
         if isinstance(index, slice):
+<<<<<<< HEAD
             return SubPattern(self.pattern, self.data[index])
+=======
+            return SubPattern(self.state, self.data[index])
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         return self.data[index]
     def __setitem__(self, index, code):
         self.data[index] = code
@@ -202,7 +216,11 @@ class SubPattern:
                 lo = lo + 1
                 hi = hi + 1
             elif op is GROUPREF:
+<<<<<<< HEAD
                 i, j = self.pattern.groupwidths[av]
+=======
+                i, j = self.state.groupwidths[av]
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 lo = lo + i
                 hi = hi + j
             elif op is GROUPREF_EXISTS:
@@ -264,19 +282,31 @@ class Tokenizer:
             result += c
             self.__next()
         return result
+<<<<<<< HEAD
     def getuntil(self, terminator):
+=======
+    def getuntil(self, terminator, name):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         result = ''
         while True:
             c = self.next
             self.__next()
             if c is None:
                 if not result:
+<<<<<<< HEAD
                     raise self.error("missing group name")
+=======
+                    raise self.error("missing " + name)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 raise self.error("missing %s, unterminated name" % terminator,
                                  len(result))
             if c == terminator:
                 if not result:
+<<<<<<< HEAD
                     raise self.error("missing group name", 1)
+=======
+                    raise self.error("missing " + name, 1)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 break
             result += c
         return result
@@ -322,6 +352,21 @@ def _class_escape(source, escape):
             c = int(escape[2:], 16)
             chr(c) # raise ValueError for invalid code
             return LITERAL, c
+<<<<<<< HEAD
+=======
+        elif c == "N" and source.istext:
+            import unicodedata
+            # named unicode escape e.g. \N{EM DASH}
+            if not source.match('{'):
+                raise source.error("missing {")
+            charname = source.getuntil('}', 'character name')
+            try:
+                c = ord(unicodedata.lookup(charname))
+            except KeyError:
+                raise source.error("undefined character name %r" % charname,
+                                   len(charname) + len(r'\N{}'))
+            return LITERAL, c
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         elif c in OCTDIGITS:
             # octal escape (up to three digits)
             escape += source.getwhile(2, OCTDIGITS)
@@ -370,6 +415,21 @@ def _escape(source, escape, state):
             c = int(escape[2:], 16)
             chr(c) # raise ValueError for invalid code
             return LITERAL, c
+<<<<<<< HEAD
+=======
+        elif c == "N" and source.istext:
+            import unicodedata
+            # named unicode escape e.g. \N{EM DASH}
+            if not source.match('{'):
+                raise source.error("missing {")
+            charname = source.getuntil('}', 'character name')
+            try:
+                c = ord(unicodedata.lookup(charname))
+            except KeyError:
+                raise source.error("undefined character name %r" % charname,
+                                   len(charname) + len(r'\N{}'))
+            return LITERAL, c
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         elif c == "0":
             # octal escape
             escape += source.getwhile(2, OCTDIGITS)
@@ -406,6 +466,7 @@ def _escape(source, escape, state):
     raise source.error("bad escape %s" % escape, len(escape))
 
 def _uniq(items):
+<<<<<<< HEAD
     if len(set(items)) == len(items):
         return items
     newitems = []
@@ -413,6 +474,9 @@ def _uniq(items):
         if item not in newitems:
             newitems.append(item)
     return newitems
+=======
+    return list(dict.fromkeys(items))
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 def _parse_sub(source, state, verbose, nested):
     # parse an alternation: a|b|c
@@ -679,13 +743,21 @@ def _parse(source, state, verbose, nested, first=False):
                     # python extensions
                     if sourcematch("<"):
                         # named group: skip forward to end of name
+<<<<<<< HEAD
                         name = source.getuntil(">")
+=======
+                        name = source.getuntil(">", "group name")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                         if not name.isidentifier():
                             msg = "bad character in group name %r" % name
                             raise source.error(msg, len(name) + 1)
                     elif sourcematch("="):
                         # named backreference
+<<<<<<< HEAD
                         name = source.getuntil(")")
+=======
+                        name = source.getuntil(")", "group name")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                         if not name.isidentifier():
                             msg = "bad character in group name %r" % name
                             raise source.error(msg, len(name) + 1)
@@ -748,7 +820,11 @@ def _parse(source, state, verbose, nested, first=False):
 
                 elif char == "(":
                     # conditional backreference group
+<<<<<<< HEAD
                     condname = source.getuntil(")")
+=======
+                    condname = source.getuntil(")", "group name")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                     if condname.isidentifier():
                         condgroup = state.groupdict.get(condname)
                         if condgroup is None:
@@ -916,11 +992,16 @@ def fix_flags(src, flags):
             raise ValueError("ASCII and LOCALE flags are incompatible")
     return flags
 
+<<<<<<< HEAD
 def parse(str, flags=0, pattern=None):
+=======
+def parse(str, flags=0, state=None):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     # parse 're' pattern into list of (opcode, argument) tuples
 
     source = Tokenizer(str)
 
+<<<<<<< HEAD
     if pattern is None:
         pattern = Pattern()
     pattern.flags = flags
@@ -938,6 +1019,25 @@ def parse(str, flags=0, pattern=None):
         p = _parse_sub(source, pattern, True, 0)
 
     p.pattern.flags = fix_flags(str, p.pattern.flags)
+=======
+    if state is None:
+        state = State()
+    state.flags = flags
+    state.str = str
+
+    try:
+        p = _parse_sub(source, state, flags & SRE_FLAG_VERBOSE, 0)
+    except Verbose:
+        # the VERBOSE flag was switched on inside the pattern.  to be
+        # on the safe side, we'll parse the whole thing again...
+        state = State()
+        state.flags = flags | SRE_FLAG_VERBOSE
+        state.str = str
+        source.seek(0)
+        p = _parse_sub(source, state, True, 0)
+
+    p.state.flags = fix_flags(str, p.state.flags)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
     if source.next is not None:
         assert source.next == ")"
@@ -948,7 +1048,11 @@ def parse(str, flags=0, pattern=None):
 
     return p
 
+<<<<<<< HEAD
 def parse_template(source, pattern):
+=======
+def parse_template(source, state):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     # parse 're' replacement string into list of literals and
     # group references
     s = Tokenizer(source)
@@ -958,14 +1062,22 @@ def parse_template(source, pattern):
     literal = []
     lappend = literal.append
     def addgroup(index, pos):
+<<<<<<< HEAD
         if index > pattern.groups:
+=======
+        if index > state.groups:
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
             raise s.error("invalid group reference %d" % index, pos)
         if literal:
             literals.append(''.join(literal))
             del literal[:]
         groups.append((len(literals), index))
         literals.append(None)
+<<<<<<< HEAD
     groupindex = pattern.groupindex
+=======
+    groupindex = state.groupindex
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     while True:
         this = sget()
         if this is None:
@@ -977,7 +1089,11 @@ def parse_template(source, pattern):
                 name = ""
                 if not s.match("<"):
                     raise s.error("missing <")
+<<<<<<< HEAD
                 name = s.getuntil(">")
+=======
+                name = s.getuntil(">", "group name")
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                 if name.isidentifier():
                     try:
                         index = groupindex[name]

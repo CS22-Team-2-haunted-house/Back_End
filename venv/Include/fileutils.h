@@ -1,6 +1,9 @@
 #ifndef Py_FILEUTILS_H
 #define Py_FILEUTILS_H
+<<<<<<< HEAD
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifdef __cplusplus
 extern "C" {
 #endif
@@ -19,6 +22,7 @@ PyAPI_FUNC(char*) _Py_EncodeLocaleRaw(
     size_t *error_pos);
 #endif
 
+<<<<<<< HEAD
 #ifdef Py_BUILD_CORE
 PyAPI_FUNC(int) _Py_DecodeUTF8Ex(
     const char *arg,
@@ -39,6 +43,23 @@ PyAPI_FUNC(int) _Py_EncodeUTF8Ex(
 PyAPI_FUNC(wchar_t*) _Py_DecodeUTF8_surrogateescape(
     const char *arg,
     Py_ssize_t arglen);
+=======
+
+#if !defined(Py_LIMITED_API) || Py_LIMITED_API+0 >= 0x03080000
+typedef enum {
+    _Py_ERROR_UNKNOWN=0,
+    _Py_ERROR_STRICT,
+    _Py_ERROR_SURROGATEESCAPE,
+    _Py_ERROR_REPLACE,
+    _Py_ERROR_IGNORE,
+    _Py_ERROR_BACKSLASHREPLACE,
+    _Py_ERROR_SURROGATEPASS,
+    _Py_ERROR_XMLCHARREFREPLACE,
+    _Py_ERROR_OTHER
+} _Py_error_handler;
+
+PyAPI_FUNC(_Py_error_handler) _Py_GetErrorHandler(const char *errors);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(int) _Py_DecodeLocaleEx(
     const char *arg,
@@ -46,7 +67,11 @@ PyAPI_FUNC(int) _Py_DecodeLocaleEx(
     size_t *wlen,
     const char **reason,
     int current_locale,
+<<<<<<< HEAD
     int surrogateescape);
+=======
+    _Py_error_handler errors);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(int) _Py_EncodeLocaleEx(
     const wchar_t *text,
@@ -54,7 +79,11 @@ PyAPI_FUNC(int) _Py_EncodeLocaleEx(
     size_t *error_pos,
     const char **reason,
     int current_locale,
+<<<<<<< HEAD
     int surrogateescape);
+=======
+    _Py_error_handler errors);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifndef Py_LIMITED_API
@@ -90,6 +119,10 @@ struct _Py_stat_struct {
     time_t st_ctime;
     int st_ctime_nsec;
     unsigned long st_file_attributes;
+<<<<<<< HEAD
+=======
+    unsigned long st_reparse_tag;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 };
 #else
 #  define _Py_stat_struct stat
@@ -146,19 +179,37 @@ PyAPI_FUNC(Py_ssize_t) _Py_write_noraise(
 PyAPI_FUNC(int) _Py_wreadlink(
     const wchar_t *path,
     wchar_t *buf,
+<<<<<<< HEAD
     size_t bufsiz);
+=======
+    /* Number of characters of 'buf' buffer
+       including the trailing NUL character */
+    size_t buflen);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 #ifdef HAVE_REALPATH
 PyAPI_FUNC(wchar_t*) _Py_wrealpath(
     const wchar_t *path,
     wchar_t *resolved_path,
+<<<<<<< HEAD
     size_t resolved_path_size);
+=======
+    /* Number of characters of 'resolved_path' buffer
+       including the trailing NUL character */
+    size_t resolved_path_len);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif
 
 PyAPI_FUNC(wchar_t*) _Py_wgetcwd(
     wchar_t *buf,
+<<<<<<< HEAD
     size_t size);
+=======
+    /* Number of characters of 'buf' buffer
+       including the trailing NUL character */
+    size_t buflen);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(int) _Py_get_inheritable(int fd);
 
@@ -176,6 +227,7 @@ PyAPI_FUNC(int) _Py_get_blocking(int fd);
 PyAPI_FUNC(int) _Py_set_blocking(int fd, int blocking);
 #endif   /* !MS_WINDOWS */
 
+<<<<<<< HEAD
 PyAPI_FUNC(int) _Py_GetLocaleconvNumeric(
     PyObject **decimal_point,
     PyObject **thousands_sep,
@@ -198,4 +250,11 @@ PyAPI_FUNC(void) _Py_ResetForceASCII(void);
 }
 #endif
 
+=======
+#endif   /* Py_LIMITED_API */
+
+#ifdef __cplusplus
+}
+#endif
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #endif /* !Py_FILEUTILS_H */

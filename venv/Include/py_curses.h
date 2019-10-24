@@ -91,6 +91,7 @@ static void **PyCurses_API;
 static const char catchall_ERR[]  = "curses function returned ERR";
 static const char catchall_NULL[] = "curses function returned NULL";
 
+<<<<<<< HEAD
 /* Function Prototype Macros - They are ugly but very, very useful. ;-)
 
    X - function name
@@ -150,6 +151,8 @@ static PyObject *PyCurses_ ## X (PyObject *self) \
   X(); \
   Py_RETURN_NONE; }
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifdef __cplusplus
 }
 #endif

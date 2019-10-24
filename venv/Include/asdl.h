@@ -36,7 +36,11 @@ asdl_int_seq *_Py_asdl_int_seq_new(Py_ssize_t size, PyArena *arena);
     do { \
         Py_ssize_t _asdl_i = (I); \
         assert((S) != NULL); \
+<<<<<<< HEAD
         assert(_asdl_i < (S)->size); \
+=======
+        assert(0 <= _asdl_i && _asdl_i < (S)->size); \
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         (S)->elements[_asdl_i] = (V); \
     } while (0)
 #else

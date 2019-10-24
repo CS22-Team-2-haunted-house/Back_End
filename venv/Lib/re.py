@@ -141,6 +141,7 @@ __all__ = [
 __version__ = "2.2.1"
 
 class RegexFlag(enum.IntFlag):
+<<<<<<< HEAD
     ASCII = sre_compile.SRE_FLAG_ASCII # assume ascii "locale"
     IGNORECASE = sre_compile.SRE_FLAG_IGNORECASE # ignore case
     LOCALE = sre_compile.SRE_FLAG_LOCALE # assume current 8-bit locale
@@ -159,6 +160,42 @@ class RegexFlag(enum.IntFlag):
     TEMPLATE = sre_compile.SRE_FLAG_TEMPLATE # disable backtracking
     T = TEMPLATE
     DEBUG = sre_compile.SRE_FLAG_DEBUG # dump pattern after compilation
+=======
+    ASCII = A = sre_compile.SRE_FLAG_ASCII # assume ascii "locale"
+    IGNORECASE = I = sre_compile.SRE_FLAG_IGNORECASE # ignore case
+    LOCALE = L = sre_compile.SRE_FLAG_LOCALE # assume current 8-bit locale
+    UNICODE = U = sre_compile.SRE_FLAG_UNICODE # assume unicode "locale"
+    MULTILINE = M = sre_compile.SRE_FLAG_MULTILINE # make anchors look for newline
+    DOTALL = S = sre_compile.SRE_FLAG_DOTALL # make dot match newline
+    VERBOSE = X = sre_compile.SRE_FLAG_VERBOSE # ignore whitespace and comments
+    # sre extensions (experimental, don't rely on these)
+    TEMPLATE = T = sre_compile.SRE_FLAG_TEMPLATE # disable backtracking
+    DEBUG = sre_compile.SRE_FLAG_DEBUG # dump pattern after compilation
+
+    def __repr__(self):
+        if self._name_ is not None:
+            return f're.{self._name_}'
+        value = self._value_
+        members = []
+        negative = value < 0
+        if negative:
+            value = ~value
+        for m in self.__class__:
+            if value & m._value_:
+                value &= ~m._value_
+                members.append(f're.{m._name_}')
+        if value:
+            members.append(hex(value))
+        res = '|'.join(members)
+        if negative:
+            if len(members) > 1:
+                res = f'~({res})'
+            else:
+                res = f'~{res}'
+        return res
+    __str__ = object.__str__
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 globals().update(RegexFlag.__members__)
 
 # sre exception
@@ -334,7 +371,11 @@ class Scanner:
         self.lexicon = lexicon
         # combine phrases into a compound pattern
         p = []
+<<<<<<< HEAD
         s = sre_parse.Pattern()
+=======
+        s = sre_parse.State()
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         s.flags = flags
         for phrase, action in lexicon:
             gid = s.opengroup()

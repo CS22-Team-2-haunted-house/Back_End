@@ -134,7 +134,11 @@ unicode_literals = _Feature((2, 6, 0, "alpha", 2),
                             CO_FUTURE_UNICODE_LITERALS)
 
 barry_as_FLUFL = _Feature((3, 1, 0, "alpha", 2),
+<<<<<<< HEAD
                           (3, 9, 0, "alpha", 0),
+=======
+                          (4, 0, 0, "alpha", 0),
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
                           CO_FUTURE_BARRY_AS_BDFL)
 
 generator_stop = _Feature((3, 5, 0, "beta", 1),

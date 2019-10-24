@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 
 /* Parser-tokenizer link interface */
+=======
+/* Parser-tokenizer link interface */
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifndef Py_LIMITED_API
 #ifndef Py_PARSETOK_H
 #define Py_PARSETOK_H
@@ -7,12 +12,21 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 typedef struct {
     int error;
 #ifndef PGEN
     /* The filename is useless for pgen, see comment in tok_state structure */
     PyObject *filename;
 #endif
+=======
+#include "grammar.h"      /* grammar */
+#include "node.h"         /* node */
+
+typedef struct {
+    int error;
+    PyObject *filename;
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
     int lineno;
     int offset;
     char *text;                 /* UTF-8-encoded string */
@@ -34,6 +48,11 @@ typedef struct {
 
 #define PyPARSE_IGNORE_COOKIE 0x0010
 #define PyPARSE_BARRY_AS_BDFL 0x0020
+<<<<<<< HEAD
+=======
+#define PyPARSE_TYPE_COMMENTS 0x0040
+#define PyPARSE_ASYNC_HACKS   0x0080
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(node *) PyParser_ParseString(const char *, grammar *, int,
                                               perrdetail *);

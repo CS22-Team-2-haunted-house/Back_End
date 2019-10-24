@@ -4,6 +4,7 @@
 extern "C" {
 #endif
 
+<<<<<<< HEAD
 /* Error objects */
 
 #ifndef Py_LIMITED_API
@@ -72,14 +73,19 @@ typedef PyOSErrorObject PyWindowsErrorObject;
 #endif
 #endif /* !Py_LIMITED_API */
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Error handling definitions */
 
 PyAPI_FUNC(void) PyErr_SetNone(PyObject *);
 PyAPI_FUNC(void) PyErr_SetObject(PyObject *, PyObject *);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _PyErr_SetKeyError(PyObject *);
 _PyErr_StackItem *_PyErr_GetTopmostException(PyThreadState *tstate);
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(void) PyErr_SetString(
     PyObject *exception,
     const char *string   /* decoded from utf-8 */
@@ -93,6 +99,7 @@ PyAPI_FUNC(void) PyErr_GetExcInfo(PyObject **, PyObject **, PyObject **);
 PyAPI_FUNC(void) PyErr_SetExcInfo(PyObject *, PyObject *, PyObject *);
 #endif
 
+<<<<<<< HEAD
 #if defined(__clang__) || \
     (defined(__GNUC__) && \
      ((__GNUC__ >= 3) || \
@@ -104,6 +111,10 @@ PyAPI_FUNC(void) PyErr_SetExcInfo(PyObject *, PyObject *, PyObject *);
 
 /* Defined in Python/pylifecycle.c */
 PyAPI_FUNC(void) Py_FatalError(const char *message) _Py_NO_RETURN;
+=======
+/* Defined in Python/pylifecycle.c */
+PyAPI_FUNC(void) _Py_NO_RETURN Py_FatalError(const char *message);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #if defined(Py_DEBUG) || defined(Py_LIMITED_API)
 #define _PyErr_OCCURRED() PyErr_Occurred()
@@ -127,9 +138,12 @@ PyAPI_FUNC(void) PyException_SetCause(PyObject *, PyObject *);
 /* Context manipulation (PEP 3134) */
 PyAPI_FUNC(PyObject *) PyException_GetContext(PyObject *);
 PyAPI_FUNC(void) PyException_SetContext(PyObject *, PyObject *);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) _PyErr_ChainExceptions(PyObject *, PyObject *, PyObject *);
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* */
 
@@ -140,8 +154,12 @@ PyAPI_FUNC(void) _PyErr_ChainExceptions(PyObject *, PyObject *, PyObject *);
 #define PyExceptionInstance_Check(x)                    \
     PyType_FastSubclass((x)->ob_type, Py_TPFLAGS_BASE_EXC_SUBCLASS)
 
+<<<<<<< HEAD
 #define PyExceptionClass_Name(x) \
      ((char *)(((PyTypeObject*)(x))->tp_name))
+=======
+PyAPI_FUNC(const char *) PyExceptionClass_Name(PyObject *);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 #define PyExceptionInstance_Class(x) ((PyObject*)((x)->ob_type))
 
@@ -249,10 +267,13 @@ PyAPI_FUNC(PyObject *) PyErr_SetFromErrnoWithFilename(
     PyObject *exc,
     const char *filename   /* decoded from the filesystem encoding */
     );
+<<<<<<< HEAD
 #if defined(MS_WINDOWS) && !defined(Py_LIMITED_API)
 PyAPI_FUNC(PyObject *) PyErr_SetFromErrnoWithUnicodeFilename(
     PyObject *, const Py_UNICODE *) Py_DEPRECATED(3.3);
 #endif /* MS_WINDOWS */
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 PyAPI_FUNC(PyObject *) PyErr_Format(
     PyObject *exception,
@@ -266,6 +287,7 @@ PyAPI_FUNC(PyObject *) PyErr_FormatV(
     va_list vargs);
 #endif
 
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* Like PyErr_Format(), but saves current exception as __context__ and
    __cause__.
@@ -277,16 +299,21 @@ PyAPI_FUNC(PyObject *) _PyErr_FormatFromCause(
     );
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifdef MS_WINDOWS
 PyAPI_FUNC(PyObject *) PyErr_SetFromWindowsErrWithFilename(
     int ierr,
     const char *filename        /* decoded from the filesystem encoding */
     );
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 /* XXX redeclare to use WSTRING */
 PyAPI_FUNC(PyObject *) PyErr_SetFromWindowsErrWithUnicodeFilename(
     int, const Py_UNICODE *) Py_DEPRECATED(3.3);
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(PyObject *) PyErr_SetFromWindowsErr(int);
 PyAPI_FUNC(PyObject *) PyErr_SetExcFromWindowsErrWithFilenameObject(
     PyObject *,int, PyObject *);
@@ -299,10 +326,13 @@ PyAPI_FUNC(PyObject *) PyErr_SetExcFromWindowsErrWithFilename(
     int ierr,
     const char *filename        /* decoded from the filesystem encoding */
     );
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(PyObject *) PyErr_SetExcFromWindowsErrWithUnicodeFilename(
     PyObject *,int, const Py_UNICODE *) Py_DEPRECATED(3.3);
 #endif
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 PyAPI_FUNC(PyObject *) PyErr_SetExcFromWindowsErr(PyObject *, int);
 #endif /* MS_WINDOWS */
 
@@ -329,6 +359,7 @@ PyAPI_FUNC(PyObject *) PyErr_NewExceptionWithDoc(
     const char *name, const char *doc, PyObject *base, PyObject *dict);
 PyAPI_FUNC(void) PyErr_WriteUnraisable(PyObject *);
 
+<<<<<<< HEAD
 /* In exceptions.c */
 #ifndef Py_LIMITED_API
 /* Helper that attempts to replace the current exception with one of the
@@ -350,16 +381,21 @@ PyAPI_FUNC(PyObject *) _PyErr_TrySetFromCause(
     );
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* In signalmodule.c */
 PyAPI_FUNC(int) PyErr_CheckSignals(void);
 PyAPI_FUNC(void) PyErr_SetInterrupt(void);
 
+<<<<<<< HEAD
 /* In signalmodule.c */
 #ifndef Py_LIMITED_API
 int PySignal_SetWakeupFd(int fd);
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* Support for adding program text to SyntaxErrors */
 PyAPI_FUNC(void) PyErr_SyntaxLocation(
     const char *filename,       /* decoded from the filesystem encoding */
@@ -368,6 +404,7 @@ PyAPI_FUNC(void) PyErr_SyntaxLocationEx(
     const char *filename,       /* decoded from the filesystem encoding */
     int lineno,
     int col_offset);
+<<<<<<< HEAD
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(void) PyErr_SyntaxLocationObject(
     PyObject *filename,
@@ -382,6 +419,11 @@ PyAPI_FUNC(PyObject *) PyErr_ProgramTextObject(
     PyObject *filename,
     int lineno);
 #endif
+=======
+PyAPI_FUNC(PyObject *) PyErr_ProgramText(
+    const char *filename,       /* decoded from the filesystem encoding */
+    int lineno);
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 
 /* The following functions are used to create and modify unicode
    exceptions from C */
@@ -396,6 +438,7 @@ PyAPI_FUNC(PyObject *) PyUnicodeDecodeError_Create(
     const char *reason          /* UTF-8 encoded string */
     );
 
+<<<<<<< HEAD
 /* create a UnicodeEncodeError object */
 #ifndef Py_LIMITED_API
 PyAPI_FUNC(PyObject *) PyUnicodeEncodeError_Create(
@@ -425,6 +468,8 @@ PyAPI_FUNC(PyObject *) _PyUnicodeTranslateError_Create(
     );
 #endif
 
+=======
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 /* get the encoding attribute */
 PyAPI_FUNC(PyObject *) PyUnicodeEncodeError_GetEncoding(PyObject *);
 PyAPI_FUNC(PyObject *) PyUnicodeDecodeError_GetEncoding(PyObject *);
@@ -498,6 +543,15 @@ PyAPI_FUNC(int) PyOS_snprintf(char *str, size_t size, const char  *format, ...)
 PyAPI_FUNC(int) PyOS_vsnprintf(char *str, size_t size, const char  *format, va_list va)
                         Py_GCC_ATTRIBUTE((format(printf, 3, 0)));
 
+<<<<<<< HEAD
+=======
+#ifndef Py_LIMITED_API
+#  define Py_CPYTHON_ERRORS_H
+#  include  "cpython/pyerrors.h"
+#  undef Py_CPYTHON_ERRORS_H
+#endif
+
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
 #ifdef __cplusplus
 }
 #endif

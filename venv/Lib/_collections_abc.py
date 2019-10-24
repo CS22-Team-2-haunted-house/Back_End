@@ -821,12 +821,17 @@ class MutableMapping(Mapping):
         except KeyError:
             pass
 
+<<<<<<< HEAD
     def update(*args, **kwds):
+=======
+    def update(self, other=(), /, **kwds):
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         ''' D.update([E, ]**F) -> None.  Update D from mapping/iterable E and F.
             If E present and has a .keys() method, does:     for k in E: D[k] = E[k]
             If E present and lacks .keys() method, does:     for (k, v) in E: D[k] = v
             In either case, this is followed by: for k, v in F.items(): D[k] = v
         '''
+<<<<<<< HEAD
         if not args:
             raise TypeError("descriptor 'update' of 'MutableMapping' object "
                             "needs an argument")
@@ -845,6 +850,17 @@ class MutableMapping(Mapping):
             else:
                 for key, value in other:
                     self[key] = value
+=======
+        if isinstance(other, Mapping):
+            for key in other:
+                self[key] = other[key]
+        elif hasattr(other, "keys"):
+            for key in other.keys():
+                self[key] = other[key]
+        else:
+            for key, value in other:
+                self[key] = value
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         for key, value in kwds.items():
             self[key] = value
 
@@ -986,6 +1002,11 @@ class MutableSequence(Sequence):
 
     def extend(self, values):
         'S.extend(iterable) -- extend sequence by appending elements from the iterable'
+<<<<<<< HEAD
+=======
+        if values is self:
+            values = list(values)
+>>>>>>> 716b15a33aed978ded8a6bde17855cb6c6aa7f78
         for v in values:
             self.append(v)
 
