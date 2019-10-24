@@ -1,47 +1,134 @@
-from django.contrib.auth.models import User
 from adventure.models import Player, Room
-
 
 Room.objects.all().delete()
 
-r_outside = Room(title="Outside Cave Entrance",
-               description="North of you, the cave mount beckons")
+rooms = [
+   {'title': 'The Lobby', 'description': "Quiet, spacious. Whoever owns this place must be rich."},
+   {'title': 'The Dining Room', 'description': "Enough to seat at least 100 people, who would need a dining room this big?"},
+   {'title': 'The Library', 'description': 'I didn’t know anybody read anymore.'},
+   {'title': 'Bedroom 1', 'description': "Blue walls, two cradles, this must be a baby room."},
+   {'title': 'The Music room', 'description': "A grand piano sits in the middle of the room, music seems to be playing on its own..."},
+   {'title': 'The Study', 'description': "Who needs a study when you already have a library?"},
+   {'title': 'The Office', 'description': 'Who needs a library if you already have an office?!'},
+   {'title': 'The Kitchen', 'description': "I wonder if they would mind if I cooked something to eat in here..."},
+   {'title': 'Bedroom 2', 'description': 'Rather plain, if I had to guess, this would be the guest bedroom.'},
+   {'title': 'Bathroom 1', 'description': "Well, I don’t need to use it anymore..."},
+   {'title': 'The Gold Ballroom', 'description': "Snow everywhere. There's also a pack of wolves roaming around."},
+   {'title': 'The Game Room', 'description': "There’s billiards, darts, but no time to play when I’m already practically playing clue."},
+   {'title': 'The Exercise Room', 'description': 'No thanks, I’m practically dripping sweat just by being here.'},
+   {'title': 'The Pool Room', 'description': "Didn’t I already see a pool outside when I walked in?"},
+   {'title': 'The Hallway', 'description': "I’ve been walking in a straight line for so long it feels like I’m walking in a spiral..."},
+   {'title': 'The Armory', 'description': "There’s guns and swords, what would you need all that for?."},
+   {'title': 'The Shooting Range', 'description': 'Well, I guess this is where they test out their stuff from the armory.'},
+   {'title': 'Bedroom 3', 'description': "Painted bright orange, with a huge bed in the middle of the room and nothing else."},
+   {'title': 'The Observatory', 'description': 'Have never been one for sciencey things, myself.'},
+   {'title': 'The Green Room', 'description': "These plants are alive, someone has to be around to maintain them."},
+   {'title': 'The Pantry', 'description': "A lot of moldy bread, the smell is unbearable."},
+   {'title': 'The Drawing Room', 'description': "A blank canvas and an empty chair sits in the middle of the room."},
+   {'title': 'The Art Gallery', 'description': 'I wonder who painted these...they’re not very good.'},
+   {'title': 'Bathroom 2', 'description': "No thanks, I already went."},
+   {'title': 'The Wine Cellar', 'description': "Best not to drink while on the job."},
+   {'title': 'Closet 1', 'description': "This closet is about the size of my bedroom at home!"},
+   {'title': 'The Master Bedroom', 'description': 'I bet this room is bigger than most peoples homes, I don’t think I’m alone in here.'},
+   {'title': 'Bedroom 4', 'description': "White walls, the room is empty but the outlines of where furniture used to be, stain the walls and floor."},
+   {'title': 'The Surveillance Room', 'description': 'The first time I’ve seen a screen in this whole house, and this wall is full of them, they’re all just static though.'},
+   {'title': 'Closet 2', 'description': "Nothing but towels in here."},
+   {'title': 'Bathroom 3', 'description': "This would’ve been useful earlier."},
+   {'title': 'The Alphabet Room', 'description': "Christmas lights adorn the wall, under each light is a letter. Strange."},
+   {'title': 'The Light Room', 'description': 'I suppose during the day this is where you’d go to see some sun, now its more like The Twilight Zone.'},
+   {'title': 'The Laundry Room', 'description': "No washing machine nor dryer, just buckets and washing boards."},
+   {'title': 'Closet 3', 'description': "Lots of nice suits and shoes, all hung up and proper, whoever this guy was, he had some taste."},
+   {'title': 'The Diorama Room', 'description': "In the middle of the room is a large glass case with a bunch of toy soldiers, looks like it's supposed to be The Great War."},
+   {'title': 'The Theater Room', 'description': 'A big screen with a projector in the back, uses good old fashioned film.'},
+   {'title': 'The Card Room', 'description': "Nothing in the room except a table with a house of cards in the middle. Odd."},
+   {'title': 'The Boxing Room', 'description': 'Another gymnasium, except with a small boxing ring in the middle, gotta get those frustrations out somehow.'},
+   {'title': 'The Bird Room', 'description': "An empty room with a small box in the middle, it almost sounds like there's a bird chirping in there."},
 
-r_foyer = Room(title="Foyer", description="""Dim light filters in from the south. Dusty
-passages run north and east.""")
+   {'title': 'The Lobby', 'description': "Quiet, spacious. Whoever owns this place must be rich.(2)"},
+   {'title': 'The Dining Room', 'description': "Enough to seat at least 100 people, who would need a dining room this big?(2)"},
+   {'title': 'The Library', 'description': 'I didn’t know anybody read anymore.(2)'},
+   {'title': 'Bedroom 1', 'description': "Blue walls, two cradles, this must be a baby room.(2)"},
+   {'title': 'The Music room', 'description': "A grand piano sits in the middle of the room, music seems to be playing on its own...(2)"},
+   {'title': 'The Study', 'description': "Who needs a study when you already have a library?(2)"},
+   {'title': 'The Office', 'description': 'Who needs a library if you already have an office?!(2)'},
+   {'title': 'The Kitchen', 'description': "I wonder if they would mind if I cooked something to eat in here...(2)"},
+   {'title': 'Bedroom 2', 'description': 'Rather plain, if I had to guess, this would be the guest bedroom.(2)'},
+   {'title': 'Bathroom 1', 'description': "Well, I don’t need to use it anymore...(2)"},
+   {'title': 'The Gold Ballroom', 'description': "Snow everywhere. There's also a pack of wolves roaming around.(2)"},
+   {'title': 'The Game Room', 'description': "There’s billiards, darts, but no time to play when I’m already practically playing clue.(2)"},
+   {'title': 'The Exercise Room', 'description': 'No thanks, I’m practically dripping sweat just by being here.(2)'},
+   {'title': 'The Pool Room', 'description': "Didn’t I already see a pool outside when I walked in?(2)"},
+   {'title': 'The Hallway', 'description': "I’ve been walking in a straight line for so long it feels like I’m walking in a spiral...(2)"},
+   {'title': 'The Armory', 'description': "There’s guns and swords, what would you need all that for?.(2)"},
+   {'title': 'The Shooting Range', 'description': 'Well, I guess this is where they test out their stuff from the armory.(2)'},
+   {'title': 'Bedroom 3', 'description': "Painted bright orange, with a huge bed in the middle of the room and nothing else.(2)"},
+   {'title': 'The Observatory', 'description': 'Have never been one for sciencey things, myself.(2)'},
+   {'title': 'The Green Room', 'description': "These plants are alive, someone has to be around to maintain them.(2)"},
+   {'title': 'The Pantry', 'description': "A lot of moldy bread, the smell is unbearable.(2)"},
+   {'title': 'The Drawing Room', 'description': "A blank canvas and an empty chair sits in the middle of the room.(2)"},
+   {'title': 'The Art Gallery', 'description': 'I wonder who painted these...they’re not very good.(2)'},
+   {'title': 'Bathroom 2', 'description': "No thanks, I already went.(2)"},
+   {'title': 'The Wine Cellar', 'description': "Best not to drink while on the job.(2)"},
+   {'title': 'Closet 1', 'description': "This closet is about the size of my bedroom at home!(2)"},
+   {'title': 'The Master Bedroom', 'description': 'I bet this room is bigger than most peoples homes, I don’t think I’m alone in here.(2)'},
+   {'title': 'Bedroom 4', 'description': "White walls, the room is empty but the outlines of where furniture used to be, stain the walls and floor.(2)"},
+   {'title': 'The Surveillance Room', 'description': 'The first time I’ve seen a screen in this whole house, and this wall is full of them, they’re all just static though.(2)'},
+   {'title': 'Closet 2', 'description': "Nothing but towels in here.(2)"},
+   {'title': 'Bathroom 3', 'description': "This would’ve been useful earlier.(2)"},
+   {'title': 'The Alphabet Room', 'description': "Christmas lights adorn the wall, under each light is a letter. Strange.(2)"},
+   {'title': 'The Light Room', 'description': 'I suppose during the day this is where you’d go to see some sun, now its more like The Twilight Zone.(2)'},
+   {'title': 'The Laundry Room', 'description': "No washing machine nor dryer, just buckets and washing boards.(2)"},
+   {'title': 'Closet 3', 'description': "Lots of nice suits and shoes, all hung up and proper, whoever this guy was, he had some taste.(2)"},
+   {'title': 'The Diorama Room', 'description': "In the middle of the room is a large glass case with a bunch of toy soldiers, looks like it's supposed to be The Great War.(2)"},
+   {'title': 'The Theater Room', 'description': 'A big screen with a projector in the back, uses good old fashioned film.(2)'},
+   {'title': 'The Card Room', 'description': "Nothing in the room except a table with a house of cards in the middle. Odd.(2)"},
+   {'title': 'The Boxing Room', 'description': 'Another gymnasium, except with a small boxing ring in the middle, gotta get those frustrations out somehow.(2)'},
+   {'title': 'The Bird Room', 'description': "An empty room with a small box in the middle, it almost sounds like there's a bird chirping in there.(2)"},
 
-r_overlook = Room(title="Grand Overlook", description="""A steep cliff appears before you, falling
-into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm.""")
+   {'title': 'The Lobby', 'description': "Quiet, spacious. Whoever owns this place must be rich.(3)"},
+   {'title': 'The Dining Room', 'description': "Enough to seat at least 100 people, who would need a dining room this big?(3)"},
+   {'title': 'The Library', 'description': 'I didn’t know anybody read anymore.(3)'},
+   {'title': 'Bedroom 1', 'description': "Blue walls, two cradles, this must be a baby room.(3)"},
+   {'title': 'The Music room', 'description': "A grand piano sits in the middle of the room, music seems to be playing on its own...(3)"},
+   {'title': 'The Study', 'description': "Who needs a study when you already have a library?(3)"},
+   {'title': 'The Office', 'description': 'Who needs a library if you already have an office?!(3)'},
+   {'title': 'The Kitchen', 'description': "I wonder if they would mind if I cooked something to eat in here...(3)"},
+   {'title': 'Bedroom 2', 'description': 'Rather plain, if I had to guess, this would be the guest bedroom.(3)'},
+   {'title': 'Bathroom 1', 'description': "Well, I don’t need to use it anymore...(3)"},
+   {'title': 'The Gold Ballroom', 'description': "Snow everywhere. There's also a pack of wolves roaming around.(3)"},
+   {'title': 'The Game Room', 'description': "There’s billiards, darts, but no time to play when I’m already practically playing clue.(3)"},
+   {'title': 'The Exercise Room', 'description': 'No thanks, I’m practically dripping sweat just by being here.(3)'},
+   {'title': 'The Pool Room', 'description': "Didn’t I already see a pool outside when I walked in?(3)"},
+   {'title': 'The Hallway', 'description': "I’ve been walking in a straight line for so long it feels like I’m walking in a spiral...(3)"},
+   {'title': 'The Armory', 'description': "There’s guns and swords, what would you need all that for?.(3)"},
+   {'title': 'The Shooting Range', 'description': 'Well, I guess this is where they test out their stuff from the armory.(3)'},
+   {'title': 'Bedroom 3', 'description': "Painted bright orange, with a huge bed in the middle of the room and nothing else.(3)"},
+   {'title': 'The Observatory', 'description': 'Have never been one for sciencey things, myself.(3)'},
+]
 
-r_narrow = Room(title="Narrow Passage", description="""The narrow passage bends here from west
-to north. The smell of gold permeates the air.""")
+connections = [[0, 1, "e"], [0, 2, "s"], [1, 0, "w"], [1, 10, "e"], [1, 8, "s"], [2, 0, "n"], [2, 3, "s"],
+               [3, 2, "n"], [3, 5, "e"], [3, 4, "s"], [4, 3, "n"], [4, 6, "e"], [4, 7, "s"], [5, 3, "w"],
+               [5, 9, "e"], [6, 4, "w"], [6, 9, "e"], [7, 4, "w"], [7, 15, "e"], [8, 2, "n"], [8, 12, "e"],
+               [8, 9, "s"], [9, 5, "w"], [9, 8, "n"], [9, 6, "s"], [9, 14, "e"], [10, 1, "w"], [10, 12, "s"],
+               [10, 11, "e"], [11, 10, "w"], [11, 16, "e"], [12, 8, "w"], [12, 10, "n"], [12, 13, "e"],
+               [13, 12, "w"], [13, 14, "s"], [14, 13, "n"], [14, 9, "w"], [14, 15, "s"], [14, 20, "e"],
+               [15, 7, "w"], [15, 14, "n"], [15, 22, "s"], [16, 11, "w"], [16, 18, "s"], [16, 17, "e"],
+               [17, 16, "w"], [18, 16, "n"], [18, 19, "s"], [19, 18, "n"], [19, 20, "s"], [20, 14, "w"],
+               [20, 19, "n"], [20, 23, "e"], [20, 21, "s"], [21, 20, "n"], [21, 22, "s"], [22, 21, "n"],
+               [22, 24, "e"], [22, 15, "w"], [23, 20, "w"], [24, 22, "e"], [24, 25, "n"], [25, 26, "w"],
+               [25, 27, "e"], [25, 24, "s"], [26, 25, "e"], [27, 25, "w"], [27, 28, "n"], [28, 27, "s"],
+               [28, 29, "e"], [29, 28, "w"]]
 
-r_treasure = Room(title="Treasure Chamber", description="""You've found the long-lost treasure
-chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south.""")
+saved_rooms = []
 
-r_outside.save()
-r_foyer.save()
-r_overlook.save()
-r_narrow.save()
-r_treasure.save()
+for i in range(len(rooms)):
+    saved_rooms.append(Room(title=rooms[i]['title'], description=rooms[i]['description']))
+    saved_rooms[i].save()
 
-# Link rooms together
-r_outside.connectRooms(r_foyer, "n")
-r_foyer.connectRooms(r_outside, "s")
+for i in range(len(connections)):
+    saved_rooms[connections[i][0]].connect_rooms(saved_rooms[connections[i][1]], connections[i][2])
 
-r_foyer.connectRooms(r_overlook, "n")
-r_overlook.connectRooms(r_foyer, "s")
-
-r_foyer.connectRooms(r_narrow, "e")
-r_narrow.connectRooms(r_foyer, "w")
-
-r_narrow.connectRooms(r_treasure, "n")
-r_treasure.connectRooms(r_narrow, "s")
-
-players=Player.objects.all()
+players = Player.objects.all()
 for p in players:
-  p.currentRoom=r_outside.id
-  p.save()
-
+    p.currentRoom = saved_rooms[0].id
+    p.save()

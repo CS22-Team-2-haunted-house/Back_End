@@ -1,5 +1,5 @@
 from django.contrib import admin
-# commit pls
+from .models import Room, Player
 # Register your models here.
 class RoomAdmin(admin.ModelAdmin):
     readonly_fields = ('id',)
